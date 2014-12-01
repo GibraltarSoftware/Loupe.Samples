@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7834B04E-C669-4DB1-8931-011B1BB61FBD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gibraltar.AddIn.FogBugz</RootNamespace>
+    <AssemblyName>Gibraltar.AddIn.FogBugz</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gibraltar.AddIn">
+      <HintPath>..\..\packages\Gibraltar.AddIn.3.7.0.2102\lib\4.0\Gibraltar.AddIn.dll</HintPath>
+    </Reference>
+    <Reference Include="Gibraltar.Agent, Version=3.7.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Gibraltar.Agent.3.7.0.2102\lib\4.0\Gibraltar.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddInCommand.cs" />
+    <Compile Include="AddInController.cs" />
+    <Compile Include="CaseStatus.cs" />
+    <Compile Include="ConfigurationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigurationEditor.Designer.cs">
+      <DependentUpon>ConfigurationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HubConfig.cs" />
+    <Compile Include="Internal\AddDefectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Internal\AddDefectDialog.Designer.cs">
+      <DependentUpon>AddDefectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\FogBugzCaseReader.cs" />
+    <Compile Include="FogBugzLookupView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FogBugzLookupView.Designer.cs">
+      <DependentUpon>FogBugzLookupView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\FogBugzCaseInfo.cs" />
+    <Compile Include="Internal\FogBugzCaseList.cs" />
+    <None Include="app.config" />
+    <None Include="Internal\FogBugzFilter.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="Internal\FogBugzFilter.Designer.cs">
+      <DependentUpon>FogBugzFilter.cs</DependentUpon>
+    </None>
+    <Compile Include="FogBugzSummaryView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FogBugzSummaryView.Designer.cs">
+      <DependentUpon>FogBugzSummaryView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonConfig.cs" />
+    <Compile Include="AddDefectCommand.cs" />
+    <Compile Include="Internal\LogMessageFormatter.cs" />
+    <Compile Include="Internal\NewMappingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Internal\NewMappingDialog.Designer.cs">
+      <DependentUpon>NewMappingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LastUpdatedFilter.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="MappingList.cs" />
+    <Compile Include="Internal\FBApi.cs" />
+    <Compile Include="Internal\FogBugzCaseWriter.cs" />
+    <Compile Include="SessionAnalysisAddIn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Internal\ErrorInfo.cs" />
+    <Compile Include="UserConfig.cs" />
+    <Compile Include="VersionHelper.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ConfigurationEditor.resx">
+      <DependentUpon>ConfigurationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internal\AddDefectDialog.resx">
+      <DependentUpon>AddDefectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FogBugzLookupView.resx">
+      <DependentUpon>FogBugzLookupView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Internal\FogBugzFilter.resx">
+      <DependentUpon>FogBugzFilter.cs</DependentUpon>
+    </None>
+    <EmbeddedResource Include="FogBugzSummaryView.resx">
+      <DependentUpon>FogBugzSummaryView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internal\NewMappingDialog.resx">
+      <DependentUpon>NewMappingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

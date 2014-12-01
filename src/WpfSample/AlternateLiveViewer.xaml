@@ -1,0 +1,19 @@
+﻿<Window x:Class="AgentTest.Wpf.AlternateLiveViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Live Viewer Control Example" Height="300" Width="726" xmlns:my="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration" xmlns:gl="clr-namespace:Gibraltar.Agent.Windows;assembly=Gibraltar.Agent">
+    <Grid>
+        <TabControl Name="mainTabControl">
+            <TabItem Header="Live Log Viewer" Name="logViewerTab">
+                <Grid>
+                    <my:WindowsFormsHost Name="logViewerInFormsHost">
+                        <gl:LiveLogViewer x:Name="liveLogViewer" Dock="Fill" />
+                    </my:WindowsFormsHost>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Other Content" Name="contentTab">
+                <Grid />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

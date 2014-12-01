@@ -1,0 +1,20 @@
+﻿<Window x:Class="AgentTest.Wpf.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Gibraltar Logging Sample" Height="282" Width="513">
+    <Grid>
+        <StatusBar Height="23" Name="mainStatusBar" VerticalAlignment="Bottom" />
+        <Canvas Name="canvas1" Margin="0,0,0,20">
+            <GroupBox Canvas.Left="8" Canvas.Top="10" Header="Logging Options" Height="192" Name="logOptionsGroupBox" Width="326">
+                <Grid>
+                    <Button Height="33" HorizontalAlignment="Left" Margin="10,11,0,0" Name="LogManyMessagesButton" VerticalAlignment="Top" Width="98" Click="LogManyMessagesButton_Click">Log Messages</Button>
+                    <Button Height="33" HorizontalAlignment="Left" Margin="10,50,0,0" Name="PackageAndSendButton" VerticalAlignment="Top" Width="98" Click="PackageAndSendButton_Click">Package &amp; Send</Button>
+                    <Button Height="33" HorizontalAlignment="Left" Margin="10,0,0,47" Name="ShowPackagerDialogButton" VerticalAlignment="Bottom" Width="98" Click="ShowPackagerDialogButton_Click">Show Packager</Button>
+                </Grid>
+            </GroupBox>
+            <Button Height="33" Name="ShowViewerButton" Canvas.Left="366" Canvas.Top="38" Width="98" Click="ShowViewerButton_Click">Show Viewer</Button>
+            <Button Name="ThrowExceptionButton" Height="33" Canvas.Left="366" Canvas.Top="77" Width="98" Click="ThrowExceptionButton_Click">Throw Exception</Button>
+            <Button Canvas.Left="366" Canvas.Top="163" Height="33" Name="ShowWpfViewerButton" Width="98" Click="ShowWpfViewerButton_Click">WPF Viewer</Button>
+        </Canvas>
+    </Grid>
+</Window>
