@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliper", "src\Caliper\Caliper.csproj", "{8C2C8855-2D66-49AD-9C1B-5E47836BD02F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{F7453126-C51A-4220-A14F-1298E3F04746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7453126-C51A-4220-A14F-1298E3F04746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7453126-C51A-4220-A14F-1298E3F04746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2C8855-2D66-49AD-9C1B-5E47836BD02F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2C8855-2D66-49AD-9C1B-5E47836BD02F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2C8855-2D66-49AD-9C1B-5E47836BD02F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2C8855-2D66-49AD-9C1B-5E47836BD02F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
