@@ -30,3 +30,14 @@ or like this:
         timer.Stop();
     }
 ```
+
+AddIn.Export
+------------
+This add-in allows you to export Loupe log messages and/or metrics as text files.
+
+Files can be exported on-demand from Loupe Desktop using right-click context menus
+or the add-in can be configured to export files automatically as logs are added
+to the repository.  This latter usage is great for integrating Loupe with other
+log analysis software such as Loggly, Splunk, PaperTrail and LogStash.
+
+Note that the AddIn.Export project provides a more detailed README.md file.
