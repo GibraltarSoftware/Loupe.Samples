@@ -9,7 +9,7 @@ Caliper is a handy little class you can use to easily add Loupe metrics to your 
 
 Here's how easy it is to time a bit of code:
 
-```cs
+```C#
     using (new Caliper("Tests.DoWork"))
     {
         // Do something
@@ -18,7 +18,7 @@ Here's how easy it is to time a bit of code:
 
 or like this:
 
-```cs
+```C#
     var timer = new Caliper("Tests.StartStop");
     private void btnStartWorking_Click(object sender, EventArgs e)
     {
