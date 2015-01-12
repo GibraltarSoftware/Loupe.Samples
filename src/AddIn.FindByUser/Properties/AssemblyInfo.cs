@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AddIn.Alert")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Gibraltar Loupe Session Alert Add-In")]
+[assembly: AssemblyDescription("Scans sessions for excessive resource consumption")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AddIn.Alert")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Gibraltar Software, Inc")]
+[assembly: AssemblyProduct("Gibraltar Loupe")]
+[assembly: AssemblyCopyright("Copyright © 2008-2015 Gibraltar Software, Inc")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("335ec42f-70b4-441a-addb-961168f9c2b9")]
+[assembly: Guid("a819c818-07dc-443a-9603-a9c5a8193782")]
 
 // Version information for an assembly consists of the following four values:
 //
