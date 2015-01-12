@@ -3,33 +3,13 @@ Loupe.Samples
 
 Code samples for Loupe - including Agent usage and Add In development
 
-Caliper
---------
-Caliper is a handy little class you can use to easily add Loupe metrics to your code.
+AddIn.FindByUser
+----------------
+This add-in indexes all the users associated with each log session so that you
+can quickly find the logs associated with a particular user. The indexed data can
+be stored in either a VistaDB or SQL Server database.
 
-Here's how easy it is to time a bit of code:
-
-```C#
-    using (new Caliper("Tests.DoWork"))
-    {
-        // Do something
-    }
-```
-
-or like this:
-
-```C#
-    var timer = new Caliper("Tests.StartStop");
-    private void btnStartWorking_Click(object sender, EventArgs e)
-    {
-        timer.Start();
-    }
-
-    private void btnStopWorking_Click(object sender, EventArgs e)
-    {
-        timer.Stop();
-    }
-```
+Full details are provided in a README.md file associated with the AddIn.FindByUser project.
 
 AddIn.Export
 ------------
@@ -41,3 +21,34 @@ to the repository.  This latter usage is great for integrating Loupe with other
 log analysis software such as Loggly, Splunk, PaperTrail and LogStash.
 
 Note that the AddIn.Export project provides a more detailed README.md file.
+
+Caliper
+--------
+Caliper is a handy little class you can use to easily add Loupe metrics to your code.
+
+Here's how easy it is to measure the duration of a block of code:
+
+```C#
+    using (new Caliper("Tests.DoWork"))
+    {
+        // Do something
+    }
+```
+
+or you could measure an asynchronous process like this:
+
+```C#
+    var timer = new Caliper("Tests.StartStop");
+    private void Start()
+    {
+        timer.Start();
+        // Start doing something...
+    }
+
+    private void Stop()
+    {
+        // ... all done!
+        timer.Stop();
+    }
+```
+
