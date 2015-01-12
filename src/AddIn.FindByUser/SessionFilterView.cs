@@ -33,7 +33,7 @@ namespace Gibraltar.AddIn.FindByUser
         public SessionFilterView()
         {
             InitializeComponent();
-            _title = "User Lookup";
+            _title = "Find Sessions by User";
         }
 
         private void UserLookupView_Enter(object sender, EventArgs e)
