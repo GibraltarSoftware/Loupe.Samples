@@ -120,9 +120,9 @@ namespace Gibraltar.AddIn.FindByUser
                     AddParameter(command, "@sessionId", sessionId);
                     AddParameter(command, "@sessionDate", sessionDate);
 
-                    var key = (int?) command.ExecuteScalar();
-                    if (key.HasValue)
-                        sessionKey = key.Value;
+                    var key = command.ExecuteScalar();
+                    if (key != null)
+                        sessionKey = Convert.ToInt32(key);
                 }
 
                 // If not, add one now
@@ -134,9 +134,9 @@ namespace Gibraltar.AddIn.FindByUser
                                               + "(@sessionId, @sessionDate); select @@identity";
                         AddParameter(command, "@sessionId", sessionId);
                         AddParameter(command, "@sessionDate", sessionDate);
-                        var key = (int?) command.ExecuteScalar();
-                        if (key.HasValue)
-                            sessionKey = key.Value;
+                        var key = command.ExecuteScalar();
+                        if (key != null)
+                            sessionKey = Convert.ToInt32(key);
                     }
                 }
 
@@ -154,9 +154,9 @@ namespace Gibraltar.AddIn.FindByUser
                     {
                         command.CommandText = "select id from dbo.Username where Username = @username";
                         AddParameter(command, "@username", user);
-                        var key = (int?) command.ExecuteScalar();
-                        if (key.HasValue)
-                            userKey = key.Value;
+                        var key = command.ExecuteScalar();
+                        if (key != null)
+                            userKey = Convert.ToInt32(key);
                     }
 
                     // If not, add the user
@@ -167,9 +167,9 @@ namespace Gibraltar.AddIn.FindByUser
                             command.CommandText = "insert into dbo.Username (Username) values "
                                                   + "(@username); select @@identity";
                             AddParameter(command, "@username", user);
-                            var key = (int?) command.ExecuteScalar();
-                            if (key.HasValue)
-                                userKey = key.Value;
+                            var key = command.ExecuteScalar();
+                            if (key != null)
+                                userKey = Convert.ToInt32(key);
                         }
                     }
 
@@ -185,11 +185,11 @@ namespace Gibraltar.AddIn.FindByUser
                                               + "Session_FK = @sessionKey and User_FK = @userKey";
                         AddParameter(command, "@sessionKey", sessionKey);
                         AddParameter(command, "@userKey", userKey);
-                        var count = (int?) command.ExecuteScalar();
+                        var count = command.ExecuteScalar();
 
                         // If the user is already associated with this session,
                         // there's nothing more to do for this user
-                        if (count.HasValue && count.Value  > 0)
+                        if (count != null && Convert.ToInt32(count) > 0)
                             continue;
                     }
 
