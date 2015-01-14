@@ -167,13 +167,26 @@ namespace Gibraltar.AddIn.FindByUser
             if (!skipScan)
             {
                 var missingSessions = 0;
+                var localSession = 0;
                 foreach (var summary in sessionSummaries)
                 {
                     if (summary.HasData)
-                        ScanSession(summary.Session());
+                        try
+                        {
+                            ScanSession(summary.Session());
+                        }
+                        catch (NotImplementedException ex)
+                        {
+                            localSession++;
+                            missingSessions++;
+                        }
                     else
                         missingSessions++;
                 }
+
+                if (localSession > 0)
+                    _addInContext.Log.Warning(FindByUserAddIn.LogCategory, "AddIns are not compatible with local sessions",
+                        "This will be corrected in a future version of Loupe Desktop.");
 
                 var description = string.Format("{0} sessions scanned.", sessionSummaries.Count);
                 if (missingSessions > 0)
