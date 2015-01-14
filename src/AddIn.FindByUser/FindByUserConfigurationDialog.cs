@@ -34,6 +34,8 @@ namespace Gibraltar.AddIn.FindByUser
                 newConfig.ConnectionString = txtConnectionString.Text;
                 newConfig.AutoScanSessions = chkEnableAutoScan.Checked;
 
+                configuration.Machine = newConfig; // this is redundant except in the crucial first-time initialization case!
+
                 LogConfigurationChanges(newConfig, oldConfig);
             }
             else
