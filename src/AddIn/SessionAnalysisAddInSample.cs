@@ -57,7 +57,7 @@ namespace Gibraltar.AddIn.Test
             //we're going to read the config here and save what we care about so we don't have to 
             //deal with error handling during the process phase.
 
-            SampleAddInConfiguration configuration = m_AddInContext.Configuration.Machine as SampleAddInConfiguration;
+            SampleAddInConfiguration configuration = m_AddInContext.Configuration.Common as SampleAddInConfiguration;
 
             if (configuration == null)
             {

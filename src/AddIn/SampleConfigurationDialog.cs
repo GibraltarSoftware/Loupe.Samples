@@ -23,7 +23,7 @@ namespace Gibraltar.AddIn.Test
         /// </returns>
         public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
         {
-            m_Configuration = configuration.Machine as SampleAddInConfiguration ?? new SampleAddInConfiguration();
+            m_Configuration = configuration.Common as SampleAddInConfiguration ?? new SampleAddInConfiguration();
 
             DisplayConfiguration();
 
@@ -33,7 +33,7 @@ namespace Gibraltar.AddIn.Test
                 //copy back our changes.
                 m_Configuration.AutoExportSessions = chkEnableAutoExport.Checked;
                 m_Configuration.SessionExportPath = txtSessionExportPath.Text;
-                configuration.Machine = m_Configuration;
+                configuration.Common = m_Configuration;
             }
 
             return result;

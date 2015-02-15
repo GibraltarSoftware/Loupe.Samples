@@ -29,7 +29,7 @@ namespace Gibraltar.AddIn.Export
         {
             context.Log.Verbose(LogCategory, "Begin editing Session Export config", null);
 
-            _configuration = configuration.Machine as ExportAddInConfiguration ?? new ExportAddInConfiguration();
+            _configuration = configuration.Common as ExportAddInConfiguration ?? new ExportAddInConfiguration();
 
             DisplayConfiguration(context);
 
@@ -60,7 +60,7 @@ namespace Gibraltar.AddIn.Export
                     context.Log.Error(LogCategory, "Could not parse Log Message Severity", "Selected value: {0}", cboMinimumSeverity.Text);
                 _configuration.MinimumSeverity = severity;
 
-                configuration.Machine = _configuration;
+                configuration.Common = _configuration;
 
                 LogConfigurationChanges(context, oldConfig);
             }

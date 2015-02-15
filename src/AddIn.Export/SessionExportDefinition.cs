@@ -21,7 +21,7 @@ namespace Gibraltar.AddIn.Export
         public SessionExportDefinition(IRepositoryAddInContext context)
         {
             _context = context;
-            Config = context.Configuration.Machine as ExportAddInConfiguration;
+            Config = context.Configuration.Common as ExportAddInConfiguration;
             if (Config == null)
                 return; // Enabled is false
 

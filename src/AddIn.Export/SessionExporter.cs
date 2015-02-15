@@ -156,7 +156,7 @@ namespace Gibraltar.AddIn.Export
         /// <param name="sessionSummary"></param>
         private void ProcessViewCommand(ISessionSummary sessionSummary)
         {
-            var configuration = _addInContext.Configuration.Machine as ExportAddInConfiguration;
+            var configuration = _addInContext.Configuration.Common as ExportAddInConfiguration;
             if (configuration == null
                 || string.IsNullOrEmpty(configuration.SessionExportPath)
                 || !Directory.Exists(configuration.SessionExportPath))
