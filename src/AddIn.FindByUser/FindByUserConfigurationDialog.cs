@@ -20,7 +20,7 @@ namespace Gibraltar.AddIn.FindByUser
             _context = context;
             _context.Log.Verbose(FindByUserAddIn.LogCategory, "Begin editing Session Alert config", null);
 
-            var newConfig = configuration.Machine as FindByUserConfiguration ?? new FindByUserConfiguration();
+            var newConfig = configuration.Common as FindByUserConfiguration ?? new FindByUserConfiguration();
 
             DisplayConfiguration(newConfig);
 
@@ -34,7 +34,7 @@ namespace Gibraltar.AddIn.FindByUser
                 newConfig.ConnectionString = txtConnectionString.Text;
                 newConfig.AutoScanSessions = chkEnableAutoScan.Checked;
 
-                configuration.Machine = newConfig; // this is redundant except in the crucial first-time initialization case!
+                configuration.Common = newConfig; // this is redundant except in the crucial first-time initialization case!
 
                 LogConfigurationChanges(newConfig, oldConfig);
             }
