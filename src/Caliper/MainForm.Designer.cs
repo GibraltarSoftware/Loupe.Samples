@@ -33,6 +33,7 @@
             this.btnStopWorking = new System.Windows.Forms.Button();
             this.btnWorkRepeatedly = new System.Windows.Forms.Button();
             this.nudWorkRepeatedly = new System.Windows.Forms.NumericUpDown();
+            this.cbTwoSeconds = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudWorkRepeatedly)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,11 +105,24 @@
             0,
             0});
             // 
+            // cbTwoSeconds
+            // 
+            this.cbTwoSeconds.AutoSize = true;
+            this.cbTwoSeconds.Checked = true;
+            this.cbTwoSeconds.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTwoSeconds.Location = new System.Drawing.Point(13, 246);
+            this.cbTwoSeconds.Name = "cbTwoSeconds";
+            this.cbTwoSeconds.Size = new System.Drawing.Size(98, 17);
+            this.cbTwoSeconds.TabIndex = 2;
+            this.cbTwoSeconds.Text = "Warn if > 2 sec";
+            this.cbTwoSeconds.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(134, 250);
+            this.ClientSize = new System.Drawing.Size(128, 273);
+            this.Controls.Add(this.cbTwoSeconds);
             this.Controls.Add(this.nudWorkRepeatedly);
             this.Controls.Add(this.btnWorkRepeatedly);
             this.Controls.Add(this.btnStopWorking);
@@ -122,6 +136,7 @@
             this.Text = "Caliper Tests";
             ((System.ComponentModel.ISupportInitialize)(this.nudWorkRepeatedly)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -132,6 +147,7 @@
         private System.Windows.Forms.Button btnStopWorking;
         private System.Windows.Forms.Button btnWorkRepeatedly;
         private System.Windows.Forms.NumericUpDown nudWorkRepeatedly;
+        private System.Windows.Forms.CheckBox cbTwoSeconds;
     }
 }
 

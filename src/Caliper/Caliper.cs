@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Gibraltar.Agent.Metrics;
 
-namespace Gibraltar.Log
+namespace Gibraltar.Agent
 {
     /// <summary>
     /// A very simple class for timing the execution of code blocks as a Loupe metric
@@ -12,22 +12,39 @@ namespace Gibraltar.Log
         EventMetric Metric { get; set; }
         private bool ExplicitStartStop { get; set; }
         private Stopwatch Timer { get; set; }
+        private TimeSpan? WarningTimeSpan { get; set; }
         private bool _disposed;
+        private string _logCategory;
+
         private const string RootCategory = "Caliper"; // Root category for organizing calipers
         private const string DefaultInstance = "Default"; // Name to use if none specified
         private const string MetricSystem = "Caliper"; // defines a namespace for categories
         private const string DurationCaption = "Duration"; // Caption to use for timer duration
+        private const int MaxDecimalDigits = 3; // Maximum number of decimal digits in log messages reporting seconds
 
         /// <summary>
-        /// Initialize a timer with a dot-delimited name
+        /// Returns a Timespan containing the elapsed time of this Caliper
         /// </summary>
-        /// <remarks>
-        /// The Caliper will initially be started for suitability with a using block.
-        /// Alternately, you can call the Start/Stop methods explicitly.
-        /// </remarks>
-        public Caliper(string name)
+        public TimeSpan Elapsed { get { return Timer.Elapsed; } }
+
+        /// <summary>
+        /// Returns a long containing the number of milliseconds elapsed for this Caliper
+        /// </summary>
+        public long ElapsedMilliseconds { get { return Timer.ElapsedMilliseconds; } }
+
+       /// <summary>
+       /// Initialize a timer with a dot-delimited name and optional threshold Timespan for warnings
+       /// </summary>
+       /// <remarks>
+       /// Caliper implements IDisposable so you can time a block of code by wrapping it in a using block.
+       /// If you want to time something more complex than a contiguous code block, use the Start/Stop methods.
+       /// </remarks>
+       /// <param name="name">The dot-delimited name of this Caliper</param>
+       /// <param name="warningTime">Log a warning if the Caliper exceeds this threshold</param>
+        public Caliper(string name, TimeSpan? warningTime = null)
         {
             InitializeMetric(name);
+            WarningTimeSpan = warningTime;
 
             ExplicitStartStop = false;
             Timer = new Stopwatch();
@@ -118,6 +135,8 @@ namespace Gibraltar.Log
                 instance = name.Substring(pos + 1);
             }
 
+            _logCategory = category + "." + instance; // Initializ category for logging
+
             EventMetricDefinition metricDefinition;
 
             // Create the metric on first call then use cached copy thereafter
@@ -139,8 +158,17 @@ namespace Gibraltar.Log
         private void WriteMetric()
         {
             EventMetricSample sample = Metric.CreateSample();
-            sample.SetValue(DurationCaption, Timer.Elapsed);
+            var elapsed = Timer.Elapsed;
+            sample.SetValue(DurationCaption, elapsed);
             sample.Write();
+
+            if (WarningTimeSpan.HasValue && WarningTimeSpan.Value > TimeSpan.Zero && WarningTimeSpan.Value < elapsed)
+            {
+                var threshold = WarningTimeSpan.Value.TotalSeconds;
+                var caption = _logCategory + " exceeds " + Math.Round(threshold, MaxDecimalDigits) + " seconds";
+                var description = "Elapsed time = " + Math.Round(elapsed.TotalSeconds, MaxDecimalDigits) + " seconds";
+                Log.Warning(null, _logCategory, caption, description);
+            }
         }
     }
 }
