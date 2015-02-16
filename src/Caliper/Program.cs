@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using Gibraltar.Agent;
-using Gibraltar.Log;
 
 namespace CaliperTest
 {
