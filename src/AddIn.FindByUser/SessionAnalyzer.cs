@@ -57,7 +57,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// </summary>
         void ISessionAnalyzer.Process(ISession session)
         {
-            var config = _addInContext.Configuration.Machine as FindByUserConfiguration;
+            var config = _addInContext.Configuration.Common as FindByUserConfiguration;
             if (config == null || config.AutoScanSessions == false)
                 return;
 

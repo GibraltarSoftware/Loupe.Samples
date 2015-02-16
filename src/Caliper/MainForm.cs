@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.Log;
+using Gibraltar.Agent;
 
 namespace CaliperTest
 {
@@ -35,17 +35,21 @@ namespace CaliperTest
         /// measure execution time for non-contiguous blocks of code for
         /// which a using block is not viable.
         /// </summary>
-        readonly Caliper _timer = new Caliper("Tests.StartStop");
+        private Caliper _timer;
         private void btnStartWorking_Click(object sender, EventArgs e)
         {
+            if (cbTwoSeconds.Checked)
+                _timer = new Caliper("Tests.StartStop", new TimeSpan(0,0,2));
+            else
+                _timer = new Caliper("Tests.StartStop");
             Trace.WriteLine("Start Working...");
             _timer.Start();
         }
 
         private void btnStopWorking_Click(object sender, EventArgs e)
         {
-            Trace.WriteLine("Stop Working");
             _timer.Stop();
+            Trace.WriteLine("Stop Working after " + Math.Round(_timer.Elapsed.TotalSeconds, 3) + " seconds");
         }
 
         /// <summary>

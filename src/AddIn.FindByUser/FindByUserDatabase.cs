@@ -11,7 +11,7 @@ namespace Gibraltar.AddIn.FindByUser
     {
         public static FindByUserDatabase GetDatabase(IRepositoryAddInContext context)
         {
-            var config = context.Configuration.Machine as FindByUserConfiguration;
+            var config = context.Configuration.Common as FindByUserConfiguration;
             if (config == null)
                 return null;
 
