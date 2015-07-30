@@ -1,11 +1,11 @@
-﻿using Gibraltar.Analyst.Data;
+﻿using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
     static class ExtensionMethods
     {
         /// <summary>
-        /// FullApplicationName is guarenteed to only have a period between Product and Application
+        /// FullApplicationName is guaranteed to only have a period between Product and Application
         /// </summary>
         public static string FullApplicationName(this ISessionSummary summary)
         {
@@ -14,7 +14,7 @@ namespace Gibraltar.AddIn.Export
         }
 
         /// <summary>
-        /// FullMetricName is guarenteed to not have a period in CounterName
+        /// FullMetricName is guaranteed to not have a period in CounterName
         /// </summary>
         public static string FullMetricName(this IMetricDefinition definition)
         {

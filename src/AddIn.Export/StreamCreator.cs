@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.RegularExpressions;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -29,7 +29,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Create a TXT file for exporting log messages
         /// </summary>
-        static public StreamWriter CreateLogStream(IRepositoryAddInContext context, ExportAddInConfiguration config, ISession session)
+        static public StreamWriter CreateLogStream(IRepositoryExtensionContext context, ExportAddInConfiguration config, ISession session)
         {
             var info = session.Summary;
             var subFolder = Path.Combine(info.Product, info.Application);
@@ -43,7 +43,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Create a CSV for a metric that contains only a single instance
         /// </summary>
-        static public StreamWriter CreateMetricStream(IRepositoryAddInContext context, ExportAddInConfiguration config, ISession session, IMetricDefinition metric, ref int metricFileCount)
+        static public StreamWriter CreateMetricStream(IRepositoryExtensionContext context, ExportAddInConfiguration config, ISession session, IMetricDefinition metric, ref int metricFileCount)
         {
             var info = session.Summary;
             var subFolder = Path.Combine(info.Product, info.Application);
@@ -60,7 +60,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Create a CSV for a metric that contains multiple instances
         /// </summary>
-        public static StreamWriter CreateMetricInstanceStream(IRepositoryAddInContext context, ExportAddInConfiguration config, ISession session, IMetric metric, ref int metricFileCount)
+        public static StreamWriter CreateMetricInstanceStream(IRepositoryExtensionContext context, ExportAddInConfiguration config, ISession session, IMetric metric, ref int metricFileCount)
         {
             var info = session.Summary;
             var subFolder = Path.Combine(info.Product, info.Application);
@@ -77,7 +77,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Shared logic for creating all streams
         /// </summary>
-        static StreamWriter CreateStream(IRepositoryAddInContext context, string baseFolder, string subFolder, string fileName, string filetype)
+        static StreamWriter CreateStream(IRepositoryExtensionContext context, string baseFolder, string subFolder, string fileName, string filetype)
         {
             // Guard against illegal characters
             subFolder = illegalInPath.Replace(subFolder, "_");

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
+using Gibraltar.Extensibility.Server;
+using IRepositoryExtensionContext = Gibraltar.Extensibility.Client.IRepositoryExtensionContext;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -15,7 +17,7 @@ namespace Gibraltar.AddIn.Export
         public const string ExportLogMessagesSpecifier = "Log Messages";
         private const string LogCategory = "SessionExport.AddIn";
 
-        private IRepositoryAddInContext _addInContext;
+        private IRepositoryExtensionContext _addInContext;
 
         private bool _initialized;
         private bool _isDisposed;
@@ -42,7 +44,7 @@ namespace Gibraltar.AddIn.Export
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryExtensionContext context)
         {
             if (_initialized)
                 throw new InvalidOperationException("The add-in has already been initialized and shouldn't be re-initialized");
@@ -71,7 +73,7 @@ namespace Gibraltar.AddIn.Export
         }
 
         /// <summary>
-        /// This method is called once for each session the user explicitly requests to be exorted
+        /// This method is called once for each session the user explicitly requests to be exported
         /// </summary>
         private void ExportSession(ISession session)
         {
@@ -195,7 +197,7 @@ namespace Gibraltar.AddIn.Export
                 if (missingSessionCount > 0 && _addInContext.IsUserInterfaceSupported)
                 {
                     var msg = string.Format(
-                        "{0} of the {1} sessions you selected are not availale. "
+                        "{0} of the {1} sessions you selected are not available. "
                         + "This is typically because they have not yet been downloaded.\r\n\r\n"
                         + "Continue anyway?", missingSessionCount, sessionSummaries.Count);
 
@@ -267,7 +269,7 @@ namespace Gibraltar.AddIn.Export
             // an STA thread to actually post our string to the clipboard.
             // http://www.codeproject.com/Articles/2207/Clipboard-handling-with-NET?msg=2572888#xx2572888xx
             var t = new Thread(() => Clipboard.SetText(s.ToString()));
-            t.SetApartmentState(ApartmentState.STA); // t.ApartmentState is depracated
+            t.SetApartmentState(ApartmentState.STA); // t.ApartmentState is deprecated
             t.Start();
             t.Join(); // so the application wouldn't stop
 

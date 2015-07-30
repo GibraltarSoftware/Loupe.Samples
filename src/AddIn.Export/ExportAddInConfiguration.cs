@@ -1,5 +1,5 @@
 ﻿using System;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -16,9 +16,9 @@ namespace Gibraltar.AddIn.Export
         public HashSet<string> Applications { get; private set; }
         public HashSet<string> Metrics { get; private set; }
         private ExportAddInConfiguration Config { get; set; }
-        private readonly IRepositoryAddInContext _context;
+        private readonly IRepositoryExtensionContext _context;
 
-        public MetricExportDefinition(IRepositoryAddInContext context, ExportAddInConfiguration config)
+        public MetricExportDefinition(IRepositoryExtensionContext context, ExportAddInConfiguration config)
         {
             _context = context;
             Config = config;

@@ -1,18 +1,16 @@
 ﻿
-using Gibraltar.Analyst.AddIn;
+using Gibraltar.Extensibility;
+using Gibraltar.Extensibility.Client;
 
 namespace Gibraltar.AddIn.Export
 {
     /// <summary>
     /// Top-level class for integrating with the Loupe framework
     /// </summary>
-    [GibraltarAddIn("Export Sessions", Description = "This add-in exports Loupe session data to text files. "
-    + "It is most useful in combination with other programs such as Excel or Splunk that allow analysis of log data. "
-    + "You specify which metrics you are interested in from which applications and this add-in will create text files "
-    + "for each specified metric", 
+    [LoupeExtension("Gibraltar.AddIn.Export", 
         ConfigurationEditor = typeof(ExportConfigurationDialog),
         MachineConfiguration = typeof(ExportAddInConfiguration))]
-    public class ExportAddIn: IAddInController
+    public class ExportAddIn : IExtensionController
     {
         public void Dispose()
         {
@@ -21,7 +19,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Called to initialize the add in.
         /// </summary>
-        public void Initialize(IAddInContext context, IAddInControllerContext controllerContext)
+        public void Initialize(IExtensionContext context, IExtensionControllerContext controllerContext)
         {
             //we have to register all of our types during this call or they won't be used at all.
             controllerContext.RegisterSessionAnalyzer(typeof(SessionExporter));

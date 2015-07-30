@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -25,7 +25,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
         /// </summary>
-        public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IExtensionContext context, IExtensionConfiguration configuration, bool initialConfiguration)
         {
             context.Log.Verbose(LogCategory, "Begin editing Session Export config", null);
 
@@ -88,7 +88,7 @@ namespace Gibraltar.AddIn.Export
             return environment;
         }
 
-        private void DisplayConfiguration(IAddInContext context)
+        private void DisplayConfiguration(IExtensionContext context)
         {
             txtExportPath.Text = _configuration.SessionExportPath;
             txtEnvironment.Text = _configuration.Environment;
@@ -108,7 +108,7 @@ namespace Gibraltar.AddIn.Export
                 txtMetricsToExport.Text = _configuration.MetricsToExport.Replace("\n", Environment.NewLine);
         }
 
-        private void AssignValueToCombobox(IAddInContext context, ComboBox comboBox, string text)
+        private void AssignValueToCombobox(IExtensionContext context, ComboBox comboBox, string text)
         {
             if (comboBox.Items.Contains(text))
                 comboBox.Text = text;
@@ -120,7 +120,7 @@ namespace Gibraltar.AddIn.Export
             }
         }
 
-        private void LogConfigurationChanges(IAddInContext context, ExportAddInConfiguration oldConfig)
+        private void LogConfigurationChanges(IExtensionContext context, ExportAddInConfiguration oldConfig)
         {
             if (oldConfig.Equals(_configuration))
                 context.Log.Verbose(LogCategory, "No change to Session Export config", null);

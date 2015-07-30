@@ -1,5 +1,5 @@
-﻿using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+﻿using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -9,7 +9,7 @@ namespace Gibraltar.AddIn.Export
         {
         }
 
-        protected override void ExportSummary(IRepositoryAddInContext context, ISession session)
+        protected override void ExportSummary(IRepositoryExtensionContext context, ISession session)
         {
             var summary = session.Summary;
             if (Config.IncludeSessionSummary)
@@ -50,7 +50,7 @@ namespace Gibraltar.AddIn.Export
             }
         }
 
-        protected override void ExportLogMessage(IRepositoryAddInContext context, ISession session, ILogMessage message)
+        protected override void ExportLogMessage(IRepositoryExtensionContext context, ISession session, ILogMessage message)
         {
             WriteLine(); 
             if (message.Severity == LogMessageSeverity.Verbose)

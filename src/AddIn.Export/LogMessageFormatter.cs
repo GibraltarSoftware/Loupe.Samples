@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.Export
 {
@@ -16,7 +16,7 @@ namespace Gibraltar.AddIn.Export
             Config = config;
         }
 
-        public void Export(IRepositoryAddInContext context, ISession session)
+        public void Export(IRepositoryExtensionContext context, ISession session)
         {
             if (!Config.EnableLogMessageExport)
                 return;
@@ -28,7 +28,7 @@ namespace Gibraltar.AddIn.Export
                     Writer = writer;
                     ExportSummary(context, session);
                     
-                    foreach (var message in session.Messages)
+                    foreach (var message in session.GetMessages())
                     {
                         if (message.Severity > Config.MinimumSeverity)
                             continue;
@@ -44,8 +44,8 @@ namespace Gibraltar.AddIn.Export
 
         }
 
-        protected abstract void ExportSummary(IRepositoryAddInContext context, ISession session);
-        protected abstract void ExportLogMessage(IRepositoryAddInContext context, ISession session, ILogMessage message);
+        protected abstract void ExportSummary(IRepositoryExtensionContext context, ISession session);
+        protected abstract void ExportLogMessage(IRepositoryExtensionContext context, ISession session, ILogMessage message);
 
         // These are the only methods derived classes need for writing
 
