@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
-using Gibraltar.Analyst.AddIn;
+using Gibraltar.Extensibility.Client;
 
 namespace Gibraltar.AddIn.FindByUser
 {
     public class FindByUserDatabase : IDisposable
     {
-        public static FindByUserDatabase GetDatabase(IRepositoryAddInContext context)
+        public static FindByUserDatabase GetDatabase(IRepositoryExtensionContext context)
         {
             var config = context.Configuration.Common as FindByUserConfiguration;
             if (config == null)
@@ -51,7 +51,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// </summary>
         /// <remarks>
         /// An instance of the VistaDB embedded database engine ships with Loupe Desktop and Loupe Server.
-        /// To ensure an easy complile-and-go experience for you while trying out this sample, we will use
+        /// To ensure an easy compile-and-go experience for you while trying out this sample, we will use
         /// that instance regardless of whether or not VistaDB is installed on the local machine and
         /// registered as a database provider.
         /// </remarks>
@@ -77,9 +77,9 @@ namespace Gibraltar.AddIn.FindByUser
         private DbProviderFactory ProviderFactory { get; set; }
         private string ConnectionString { get; set; }
         private DbConnection Connection { get; set; }
-        private IRepositoryAddInContext Context { get; set; }
+        private IRepositoryExtensionContext Context { get; set; }
 
-        private FindByUserDatabase(IRepositoryAddInContext context, DbProviderFactory providerFactory, string connectionString)
+        private FindByUserDatabase(IRepositoryExtensionContext context, DbProviderFactory providerFactory, string connectionString)
         {
             Context = context;
             ProviderFactory = providerFactory;

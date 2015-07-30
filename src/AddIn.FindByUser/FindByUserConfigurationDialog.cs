@@ -1,11 +1,11 @@
 ﻿using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
+using Gibraltar.Extensibility.Client;
 
 namespace Gibraltar.AddIn.FindByUser
 {
     public partial class FindByUserConfigurationDialog : Form, IConfigurationEditor
     {
-        private IAddInContext _context;
+        private IExtensionContext _context;
 
         public FindByUserConfigurationDialog()
         {
@@ -15,7 +15,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <summary>
         /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
         /// </summary>
-        public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IExtensionContext context, IExtensionConfiguration configuration, bool initialConfiguration)
         {
             _context = context;
             _context.Log.Verbose(FindByUserAddIn.LogCategory, "Begin editing Session Alert config", null);
@@ -40,7 +40,7 @@ namespace Gibraltar.AddIn.FindByUser
             }
             else
             {
-                _context.Log.Verbose(FindByUserAddIn.LogCategory, "Cancelling FindByUser config dialog", null);
+                _context.Log.Verbose(FindByUserAddIn.LogCategory, "Canceling FindByUser config dialog", null);
             }
 
             return result;

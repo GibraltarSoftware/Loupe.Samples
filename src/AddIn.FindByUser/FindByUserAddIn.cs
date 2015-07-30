@@ -1,17 +1,18 @@
 ﻿
-using Gibraltar.Analyst.AddIn;
+using Gibraltar.Extensibility;
+using Gibraltar.Extensibility.Client;
 
 namespace Gibraltar.AddIn.FindByUser
 {
     /// <summary>
     /// Top-level class for integrating with the Loupe framework
     /// </summary>
-    [GibraltarAddIn("Find By User", Description = "This add-in indexes each session by the associated user names.",
+    [LoupeExtension("Gibraltar.AddIn.FindByUser", 
         ConfigurationEditor = typeof(FindByUserConfigurationDialog),
-        MachineConfiguration = typeof(FindByUserConfiguration))]
-    public class FindByUserAddIn : IAddInController
+        CommonConfiguration = typeof(FindByUserConfiguration))]
+    public class FindByUserAddIn : IExtensionController
     {
-        public const string LogCategory = "AddIn.FindByUser";
+        public const string LogCategory = "Find By User";
 
         public void Dispose()
         {
@@ -20,7 +21,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <summary>
         /// Called to initialize the add in.
         /// </summary>
-        public void Initialize(IAddInContext context, IAddInControllerContext controllerContext)
+        public void Initialize(IExtensionContext context, IExtensionControllerContext controllerContext)
         {
             //we have to register all of our types during this call or they won't be used at all.
             controllerContext.RegisterSessionAnalyzer(typeof(SessionAnalyzer));

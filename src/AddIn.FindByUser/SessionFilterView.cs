@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.FindByUser
 {
@@ -14,7 +14,7 @@ namespace Gibraltar.AddIn.FindByUser
         private const int DataRetentionDays = 30;
         private readonly object _lock = new object(); //used for coordination between threads
         private bool _initialized;
-        private IRepositoryAddInContext _context;
+        private IRepositoryExtensionContext _context;
         private string _selectedUsername;
 
         private string _title;
@@ -330,7 +330,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <remarks>
         /// If any exception is thrown during this call this view will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryExtensionContext context)
         {
             _context = context;
             _initialized = true;

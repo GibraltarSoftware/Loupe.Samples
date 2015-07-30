@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
+using Gibraltar.Extensibility.Server;
+using IRepositoryExtensionContext = Gibraltar.Extensibility.Client.IRepositoryExtensionContext;
 
 namespace Gibraltar.AddIn.FindByUser
 {
     public class SessionAnalyzer : ISessionAnalyzer, ISessionCommand
-    {     
-        private IRepositoryAddInContext _addInContext;
+    {
+        private IRepositoryExtensionContext _addInContext;
 
         private bool _initialized;
         private bool _isDisposed;
@@ -36,7 +38,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryExtensionContext context)
         {
             if (_initialized)
                 throw new InvalidOperationException("The add-in has already been initialized and shouldn't be re-initialized");
@@ -65,7 +67,7 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// This method is called once for each session the user explicitly requests to be exorted
+        /// This method is called once for each session the user explicitly requests to be exported
         /// </summary>
         private void ScanSession(ISession session)
         {
@@ -153,7 +155,7 @@ namespace Gibraltar.AddIn.FindByUser
                 if (missingSessionCount > 0 && _addInContext.IsUserInterfaceSupported)
                 {
                     var msg = string.Format(
-                        "{0} of the {1} sessions you selected are not availale. "
+                        "{0} of the {1} sessions you selected are not available. "
                         + "This is typically because they have not yet been downloaded.\r\n\r\n"
                         + "Continue anyway?", missingSessionCount, sessionSummaries.Count);
 

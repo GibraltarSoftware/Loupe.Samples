@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Gibraltar.Extensibility.Client;
+using Gibraltar.Extensibility.Data;
 
 namespace Gibraltar.AddIn.FindByUser
 {
@@ -10,7 +10,7 @@ namespace Gibraltar.AddIn.FindByUser
         private readonly ISession _session;
         private FindByUserDatabase _db;
 
-        public SessionScanner(ISession session, IRepositoryAddInContext context)
+        public SessionScanner(ISession session, IRepositoryExtensionContext context)
         {
             _session = session;
             _db = FindByUserDatabase.GetDatabase(context);
@@ -35,7 +35,7 @@ namespace Gibraltar.AddIn.FindByUser
             var users = new HashSet<string>();
 
             // Iterate across all messages in this session fragment
-            foreach (var message in _session.Messages)
+            foreach (var message in _session.GetMessages())
             {
                 // Handle the case of sessions that span multiple days
                 var timestamp = message.Timestamp.ToLocalTime();
