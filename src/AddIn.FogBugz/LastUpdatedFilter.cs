@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gibraltar.AddIn.FogBugz
+﻿namespace Loupe.Extension.FogBugz
 {
     /// <summary>
-    /// Used to specify how back to check for last update dats
+    /// Used to specify how back to check for last update date
     /// </summary>
     public enum LastUpdatedFilter
     {

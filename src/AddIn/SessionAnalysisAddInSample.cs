@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extensibility.Server;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Test
 {
     public class SessionAnalysisAddInSample : ISessionAnalyzer, ISessionCommand
     {
         private const string LogCategory = "Sample Add In.Session Analysis";
 
-        private IRepositoryAddInContext m_AddInContext;
+        private IRepositoryContext m_AddInContext;
 
         private bool m_Initialized;
         private bool m_IsDisposed;
@@ -39,7 +40,7 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             if (m_Initialized)
                 throw new InvalidOperationException("The add in has already been initialized and shouldn't be re-initialized");
@@ -50,7 +51,7 @@ namespace Gibraltar.AddIn.Test
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -141,7 +142,7 @@ namespace Gibraltar.AddIn.Test
                 writer.Write("================================================================================================\r\n");
 
                 writer.Write("\r\n\r\nMESSAGES:\r\n================================================================================================\r\n");
-                foreach (ILogMessage message in session.Messages)
+                foreach (ILogMessage message in session.GetMessages())
                 {
                     writer.Write("\r\n{1} {2} (Sequence {0}) Logged from: {3}\r\nCategory: {4}\r\n", 
                         message.Sequence, message.Timestamp, message.Severity.ToString().ToUpperInvariant(), message.LogSystem, message.CategoryName);

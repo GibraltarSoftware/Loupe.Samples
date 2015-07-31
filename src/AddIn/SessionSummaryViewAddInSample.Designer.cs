@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.Test
+﻿namespace Loupe.Extension.Test
 {
     partial class SessionSummaryViewAddInSample
     {

@@ -5,19 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.Extensibility.Client;
-using Gibraltar.Extensibility.Data;
-using Gibraltar.Extensibility.Server;
-using IRepositoryExtensionContext = Gibraltar.Extensibility.Client.IRepositoryExtensionContext;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extensibility.Server;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     public class SessionExporter : ISessionAnalyzer, ISessionCommand
     {
         public const string ExportLogMessagesSpecifier = "Log Messages";
         private const string LogCategory = "SessionExport.AddIn";
 
-        private IRepositoryExtensionContext _addInContext;
+        private IRepositoryContext _addInContext;
 
         private bool _initialized;
         private bool _isDisposed;
@@ -44,7 +43,7 @@ namespace Gibraltar.AddIn.Export
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryExtensionContext context)
+        public void Initialize(IRepositoryContext context)
         {
             if (_initialized)
                 throw new InvalidOperationException("The add-in has already been initialized and shouldn't be re-initialized");

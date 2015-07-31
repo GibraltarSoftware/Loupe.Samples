@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Gibraltar.Extensibility.Client;
-using Gibraltar.Extensibility.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     abstract class LogMessageFormatter
     {
@@ -16,7 +16,7 @@ namespace Gibraltar.AddIn.Export
             Config = config;
         }
 
-        public void Export(IRepositoryExtensionContext context, ISession session)
+        public void Export(IRepositoryContext context, ISession session)
         {
             if (!Config.EnableLogMessageExport)
                 return;
@@ -44,8 +44,8 @@ namespace Gibraltar.AddIn.Export
 
         }
 
-        protected abstract void ExportSummary(IRepositoryExtensionContext context, ISession session);
-        protected abstract void ExportLogMessage(IRepositoryExtensionContext context, ISession session, ILogMessage message);
+        protected abstract void ExportSummary(IRepositoryContext context, ISession session);
+        protected abstract void ExportLogMessage(IRepositoryContext context, ISession session, ILogMessage message);
 
         // These are the only methods derived classes need for writing
 

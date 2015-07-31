@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// This holds the information for one case in a FogBugzCaseList

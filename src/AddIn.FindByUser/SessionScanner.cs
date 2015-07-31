@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gibraltar.Extensibility.Client;
-using Gibraltar.Extensibility.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     internal class SessionScanner : IDisposable
     {
         private readonly ISession _session;
         private FindByUserDatabase _db;
 
-        public SessionScanner(ISession session, IRepositoryExtensionContext context)
+        public SessionScanner(ISession session, IRepositoryContext context)
         {
             _session = session;
             _db = FindByUserDatabase.GetDatabase(context);

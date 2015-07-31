@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     /// <summary>
     /// Configuration data for the Session Export add-in

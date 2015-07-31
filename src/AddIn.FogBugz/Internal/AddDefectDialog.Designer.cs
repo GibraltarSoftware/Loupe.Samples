@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.FogBugz.Internal
+﻿namespace Loupe.Extension.FogBugz.Internal
 {
     partial class AddDefectDialog
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Test
 {
     public class LogMessageCommandSample : ILogMessageCommand
     {
@@ -22,12 +22,12 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(ISessionAddInContext context)
+        public void Initialize(ISessionContext context)
         {
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -68,7 +68,7 @@ namespace Gibraltar.AddIn.Test
         /// </remarks>
         public void BeforeCommandsDisplay(IUserInterfaceContext controller, IList<ILogMessage> messages)
         {
-            string toolTip = (messages.Count > 1) ? "Use these messages to create a new defect" : "Use this mesage to create a new defect";
+            string toolTip = (messages.Count > 1) ? "Use these messages to create a new defect" : "Use this message to create a new defect";
             controller.UpdateCommand(AddDefectCommandName, "Create New Defect...", toolTip, true);
         }
 

@@ -1,13 +1,10 @@
-﻿using System;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+﻿using Loupe.Extensibility.Client;
 
-
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Test
 {
-    public class GlobalCommandSample : IAddInCommand
+    public class GlobalCommandSample : IGlobalCommand
     {
-        private IAddInContext m_AddInContext;
+        private IGlobalContext m_AddInContext;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -24,16 +21,9 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call this command will not be loaded.
         /// </remarks>
-        public void Initialize(IAddInContext context)
+        public void Initialize(IGlobalContext context)
         {
             m_AddInContext = context;
-        }
-
-        /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
-        /// </summary>
-        public void ConfigurationChanged()
-        {
         }
 
         /// <summary>
@@ -97,9 +87,6 @@ namespace Gibraltar.AddIn.Test
         {
             switch (commandName)
             {
-                case "configure":
-                    m_AddInContext.EditConfiguration();
-                    break;
             }
         }
     }

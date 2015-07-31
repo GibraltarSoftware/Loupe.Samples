@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.Export
+﻿namespace Loupe.Extension.Export
 {
     partial class ExportConfigurationDialog
     {

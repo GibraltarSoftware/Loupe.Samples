@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// A session summary view that looks up a single FogBugz case and finds its related sessions
@@ -17,8 +16,8 @@ namespace Gibraltar.AddIn.FogBugz
     {
         private readonly object m_Lock = new object(); //used for coordination between threads
 
-        private IRepositoryAddInContext m_Context;
-        private AddInController m_Controller;
+        private IRepositoryContext m_Context;
+        private RepositoryController m_Controller;
         private ISessionSummaryCollection m_SessionSummaries;
         private List<ISessionSummary> m_SelectedItems;
         private bool m_Initialized;
@@ -88,16 +87,16 @@ namespace Gibraltar.AddIn.FogBugz
         /// <remarks>
         /// If any exception is thrown during this call this view will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             m_Context = context;
-            m_Controller = (AddInController)m_Context.Controller;
+            m_Controller = (RepositoryController)m_Context.RepositoryController;
 
             m_Initialized = true;
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -116,7 +115,7 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Called by the contaioner to indicate this view is no longer the active summary view.
+        /// Called by the container to indicate this view is no longer the active summary view.
         /// </summary>
         public void DeactivateView()
         {
@@ -224,7 +223,7 @@ namespace Gibraltar.AddIn.FogBugz
             }
             catch (Exception ex)
             {
-                m_Context.Log.ReportException(ex, AddInController.LogCategory, true, false);
+                m_Context.Log.ReportException(ex, RepositoryController.LogCategory, true, false);
             }
         }
 

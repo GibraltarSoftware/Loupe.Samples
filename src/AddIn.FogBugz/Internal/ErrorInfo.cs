@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
-    /// Encapsulates an algorythm for determining the fingerprint of a log messages
+    /// Encapsulates an algorithm for determining the fingerprint of a log messages
     /// </summary>
     [DebuggerDisplay("{Fingerprint}")]
     internal class ErrorInfo
@@ -46,7 +46,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
         {
             ISessionSummary summary = message.Session.Summary;
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("Gibraltar Error Fingerprint:\r\n");
+            builder.AppendFormat("Loupe Error Fingerprint:\r\n");
             builder.AppendFormat("Product: {0}\r\n", summary.Product);
             builder.AppendFormat("Application: {0}\r\n", summary.Application);
             builder.AppendFormat("Caption: {0}\r\n", message.Caption);

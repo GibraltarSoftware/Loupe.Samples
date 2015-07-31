@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Gibraltar.Extensibility.Client;
-using Gibraltar.Extensibility.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     /// <summary>
     /// Configuration Editor for the Session Export add-in
@@ -25,7 +25,7 @@ namespace Gibraltar.AddIn.Export
         /// <summary>
         /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
         /// </summary>
-        public DialogResult EditConfiguration(IExtensionContext context, IExtensionConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IRepositoryContext context, IRepositoryConfiguration configuration, bool initialConfiguration)
         {
             context.Log.Verbose(LogCategory, "Begin editing Session Export config", null);
 
@@ -88,7 +88,7 @@ namespace Gibraltar.AddIn.Export
             return environment;
         }
 
-        private void DisplayConfiguration(IExtensionContext context)
+        private void DisplayConfiguration(IRepositoryContext context)
         {
             txtExportPath.Text = _configuration.SessionExportPath;
             txtEnvironment.Text = _configuration.Environment;
@@ -108,7 +108,7 @@ namespace Gibraltar.AddIn.Export
                 txtMetricsToExport.Text = _configuration.MetricsToExport.Replace("\n", Environment.NewLine);
         }
 
-        private void AssignValueToCombobox(IExtensionContext context, ComboBox comboBox, string text)
+        private void AssignValueToCombobox(IRepositoryContext context, ComboBox comboBox, string text)
         {
             if (comboBox.Items.Contains(text))
                 comboBox.Text = text;
@@ -120,7 +120,7 @@ namespace Gibraltar.AddIn.Export
             }
         }
 
-        private void LogConfigurationChanges(IExtensionContext context, ExportAddInConfiguration oldConfig)
+        private void LogConfigurationChanges(IRepositoryContext context, ExportAddInConfiguration oldConfig)
         {
             if (oldConfig.Equals(_configuration))
                 context.Log.Verbose(LogCategory, "No change to Session Export config", null);

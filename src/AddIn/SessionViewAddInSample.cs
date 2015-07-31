@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Test
 {
     public partial class SessionViewAddInSample : UserControl, ISessionView
     {
@@ -64,7 +64,7 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call this add in will not be loaded.
         /// </remarks>
-        public void Initialize(ISessionAddInContext context)
+        public void Initialize(ISessionContext context)
         {
         }
 
@@ -161,7 +161,7 @@ namespace Gibraltar.AddIn.Test
                 BindingList<IExceptionInfo> exceptionsToDisplay = new BindingList<IExceptionInfo>();
 
                 //find all exceptions in our log messages regardless of severity.
-                foreach (ILogMessage message in m_Session.Messages)
+                foreach (ILogMessage message in m_Session.GetMessages())
                 {
                     if (message.HasException)
                     {

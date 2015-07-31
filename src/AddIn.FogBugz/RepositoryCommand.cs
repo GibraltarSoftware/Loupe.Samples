@@ -1,18 +1,17 @@
-﻿using System;
-using Gibraltar.Analyst.AddIn;
+﻿using Loupe.Extensibility.Client;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
-    /// Provides global commands
+    /// Provides repository commands
     /// </summary>
-    public class AddInCommand : IAddInCommand
+    public class RepositoryCommand : IRepositoryCommand
     {
         private const string ConfigureCommand = "Configure";
         private const string OpenSiteCommand = "GoToWeb";
 
-        private IAddInContext m_Context;
-        private AddInController m_Controller;
+        private IRepositoryContext m_Context;
+        private RepositoryController m_Controller;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -29,14 +28,14 @@ namespace Gibraltar.AddIn.FogBugz
         /// <remarks>
         /// If any exception is thrown during this call this command will not be loaded.
         /// </remarks>
-        public void Initialize(IAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             m_Context = context;
-            m_Controller = (AddInController)m_Context.Controller;
+            m_Controller = (RepositoryController)m_Context.RepositoryController;
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {

@@ -8,8 +8,8 @@
     <ProjectGuid>{F8DE3DDB-7CD3-472D-8D3D-B297214926E4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gibraltar.AddIn.Export</RootNamespace>
-    <AssemblyName>Gibraltar.AddIn.Export</AssemblyName>
+    <RootNamespace>Loupe.Extension.Export</RootNamespace>
+    <AssemblyName>Loupe.Extension.Export</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -60,7 +60,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2625\lib\net20\Loupe.Extensibility.dll</HintPath>
+      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2630\lib\net20\Loupe.Extensibility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -79,7 +79,7 @@
     <Compile Include="LogMessageFormatter.cs" />
     <Compile Include="StreamCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExportAddIn.cs" />
+    <Compile Include="ExtentionDefinition.cs" />
     <Compile Include="ExportAddInConfiguration.cs" />
     <Compile Include="ExportConfigurationDialog.cs">
       <SubType>Form</SubType>
@@ -113,7 +113,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gibraltar.AddIn.Export.nuspec" />
+    <None Include="Loupe.Extension.Export.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

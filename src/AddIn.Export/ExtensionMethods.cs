@@ -1,6 +1,6 @@
-﻿using Gibraltar.Extensibility.Data;
+﻿using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     static class ExtensionMethods
     {

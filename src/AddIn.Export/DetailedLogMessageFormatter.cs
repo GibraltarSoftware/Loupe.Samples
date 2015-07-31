@@ -1,7 +1,7 @@
-﻿using Gibraltar.Extensibility.Client;
-using Gibraltar.Extensibility.Data;
+﻿using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     internal class DetailedLogMessageFormatter : LogMessageFormatter
     {
@@ -9,7 +9,7 @@ namespace Gibraltar.AddIn.Export
         {
         }
 
-        protected override void ExportSummary(IRepositoryExtensionContext context, ISession session)
+        protected override void ExportSummary(IRepositoryContext context, ISession session)
         {
             var summary = session.Summary;
             if (Config.IncludeSessionSummary)
@@ -71,7 +71,7 @@ namespace Gibraltar.AddIn.Export
             }
         }
 
-        protected override void ExportLogMessage(IRepositoryExtensionContext context, ISession session, ILogMessage message)
+        protected override void ExportLogMessage(IRepositoryContext context, ISession session, ILogMessage message)
         {
             WriteLine();
             if (message.Severity == LogMessageSeverity.Verbose)

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
-using Gibraltar.Extensibility.Client;
+using Loupe.Extensibility.Client;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     public class FindByUserDatabase : IDisposable
     {
-        public static FindByUserDatabase GetDatabase(IRepositoryExtensionContext context)
+        public static FindByUserDatabase GetDatabase(IRepositoryContext context)
         {
             var config = context.Configuration.Common as FindByUserConfiguration;
             if (config == null)
@@ -38,7 +38,7 @@ namespace Gibraltar.AddIn.FindByUser
                 if (!DatabaseUnavailable)
                 {
                     DatabaseUnavailable = true;
-                    context.Log.Error(ex, FindByUserAddIn.LogCategory, "Could not open database",
+                    context.Log.Error(ex, ExtentionDefinition.LogCategory, "Could not open database",
                         config.ConnectionString);
                 }
             }
@@ -77,9 +77,9 @@ namespace Gibraltar.AddIn.FindByUser
         private DbProviderFactory ProviderFactory { get; set; }
         private string ConnectionString { get; set; }
         private DbConnection Connection { get; set; }
-        private IRepositoryExtensionContext Context { get; set; }
+        private IRepositoryContext Context { get; set; }
 
-        private FindByUserDatabase(IRepositoryExtensionContext context, DbProviderFactory providerFactory, string connectionString)
+        private FindByUserDatabase(IRepositoryContext context, DbProviderFactory providerFactory, string connectionString)
         {
             Context = context;
             ProviderFactory = providerFactory;
@@ -207,7 +207,7 @@ namespace Gibraltar.AddIn.FindByUser
             catch (Exception ex)
             {
                 DatabaseUnavailable = true;
-                Context.Log.RecordException(ex, FindByUserAddIn.LogCategory, true);
+                Context.Log.RecordException(ex, ExtentionDefinition.LogCategory, true);
             }
         }
 
@@ -235,7 +235,7 @@ namespace Gibraltar.AddIn.FindByUser
             catch (Exception ex)
             {
                 DatabaseUnavailable = true;
-                Context.Log.RecordException(ex, FindByUserAddIn.LogCategory, true);
+                Context.Log.RecordException(ex, ExtentionDefinition.LogCategory, true);
             }
 
             return users;
@@ -307,7 +307,7 @@ namespace Gibraltar.AddIn.FindByUser
             catch (Exception ex)
             {
                 DatabaseUnavailable = true;
-                Context.Log.RecordException(ex, FindByUserAddIn.LogCategory, true);
+                Context.Log.RecordException(ex, ExtentionDefinition.LogCategory, true);
             }
 
             return sessionIds;

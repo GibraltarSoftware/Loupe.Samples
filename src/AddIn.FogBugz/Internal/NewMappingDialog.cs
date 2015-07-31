@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     public partial class NewMappingDialog : Form
     {
@@ -90,7 +86,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
 
         private void DisplayProductsAndApplications()
         {
-            //now add these items to the project selction area.
+            //now add these items to the project selection area.
             ProductSelection.DataSource = null;
             ProductSelection.Items.Clear();
 
@@ -102,7 +98,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
 
         private void DisplayPriorities()
         {
-            //now add these items to the project selction area.
+            //now add these items to the project selection area.
             PrioritySelection.DataSource = null;
             PrioritySelection.Items.Clear();
 
@@ -116,7 +112,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
 
         private void DisplayProjectsAndAreas()
         {
-            //now add these items to the project selction area.
+            //now add these items to the project selection area.
             ProjectSelection.DataSource = null;
             ProjectSelection.Items.Clear();
 

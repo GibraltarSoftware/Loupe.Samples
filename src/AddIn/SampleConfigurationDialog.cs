@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
+﻿using System.Windows.Forms;
+using Loupe.Extensibility.Client;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Test
 {
     public partial class SampleConfigurationDialog : Form, IConfigurationEditor
     {
@@ -14,14 +13,14 @@ namespace Gibraltar.AddIn.Test
         }
 
         /// <summary>
-        /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
+        /// Called by Loupe to have the configuration editor display itself and edit the provided configuration
         /// </summary>
-        /// <param name="context">The Add In Context provides a connection to the hosting environment.</param><param name="configuration">The current configuration.</param><param name="initialConfiguration">Indicates if the configuration has ever completed in the current environment.</param>
+        /// <param name="context">The Repository Context provides a connection to the hosting environment.</param><param name="configuration">The current configuration.</param><param name="initialConfiguration">Indicates if the configuration has ever completed in the current environment.</param>
         /// <returns>
         /// DialogResult.OK if the configuration is complete and should be accepted as the new configuration.  Any other result to cancel.  If this
-        ///             is the initial configuration and it is not OK the add in will not be enabled.
+        ///             is the initial configuration and it is not OK the Extension will not be enabled.
         /// </returns>
-        public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IRepositoryContext context, IRepositoryConfiguration configuration, bool initialConfiguration)
         {
             m_Configuration = configuration.Common as SampleAddInConfiguration ?? new SampleAddInConfiguration();
 

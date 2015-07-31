@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.FogBugz
+﻿namespace Loupe.Extension.FogBugz
 {
     partial class FogBugzSummaryView
     {

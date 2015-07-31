@@ -7,8 +7,8 @@
     <ProjectGuid>{6724697A-49DC-4505-85A6-30FE112DB5C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gibraltar.AddIn.FindByUser</RootNamespace>
-    <AssemblyName>Gibraltar.AddIn.FindByUser</AssemblyName>
+    <RootNamespace>Loupe.Extension.FindByUser</RootNamespace>
+    <AssemblyName>Loupe.Extension.FindByUser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2625\lib\net20\Loupe.Extensibility.dll</HintPath>
+      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2630\lib\net20\Loupe.Extensibility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindByUserAddIn.cs" />
+    <Compile Include="ExtentionDefinition.cs" />
     <Compile Include="FindByUserConfigurationDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FindByUser.vdb4" />
-    <None Include="Gibraltar.AddIn.FindByUser.nuspec" />
+    <None Include="Loupe.Extension.FindByUser.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

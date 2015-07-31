@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Gibraltar Loupe Session Export Add-In")]
+[assembly: AssemblyTitle("Gibraltar Loupe Session Export Extension")]
 [assembly: AssemblyDescription("Exports session data to text files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gibraltar Software, Inc")]
