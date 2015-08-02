@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     /// <summary>
     /// Stores the configuration of our sample addin

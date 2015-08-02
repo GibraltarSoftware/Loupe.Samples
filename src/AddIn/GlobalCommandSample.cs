@@ -1,6 +1,6 @@
 ﻿using Loupe.Extensibility.Client;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public class GlobalCommandSample : IGlobalCommand
     {

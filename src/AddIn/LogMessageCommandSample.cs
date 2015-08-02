@@ -2,7 +2,7 @@
 using Loupe.Extensibility.Client;
 using Loupe.Extensibility.Data;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public class LogMessageCommandSample : ILogMessageCommand
     {

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Loupe.Extensibility.Client;
 using Loupe.Extensibility.Data;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public partial class SessionSummaryViewAddInSample : UserControl, ISessionSummaryView
     {

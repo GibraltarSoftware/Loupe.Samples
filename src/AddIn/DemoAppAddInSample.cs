@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Loupe.Extensibility.Client;
 using Loupe.Extensibility.Data;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     /// <summary>
     /// This session command will only apply to sessions for applications with the product name "Demo"

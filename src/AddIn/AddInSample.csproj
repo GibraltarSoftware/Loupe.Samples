@@ -8,8 +8,8 @@
     <ProjectGuid>{9E0031B1-9891-48DF-B0B3-0CD49A77CA63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Loupe.Extension.Test</RootNamespace>
-    <AssemblyName>Loupe.Extension.Test</AssemblyName>
+    <RootNamespace>Loupe.Extension.Sample</RootNamespace>
+    <AssemblyName>Loupe.Extension.Sample</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

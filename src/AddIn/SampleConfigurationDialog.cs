@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using Loupe.Extensibility.Client;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public partial class SampleConfigurationDialog : Form, IConfigurationEditor
     {

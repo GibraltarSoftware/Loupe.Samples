@@ -5,7 +5,7 @@ using Loupe.Extensibility.Client;
 using Loupe.Extensibility.Data;
 using Loupe.Extensibility.Server;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public class SessionAnalysisAddInSample : ISessionAnalyzer, ISessionCommand
     {

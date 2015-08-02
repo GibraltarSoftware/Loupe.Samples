@@ -1,4 +1,4 @@
-﻿namespace Loupe.Extension.Test
+﻿namespace Loupe.Extension.Sample
 {
     partial class SampleConfigurationDialog
     {

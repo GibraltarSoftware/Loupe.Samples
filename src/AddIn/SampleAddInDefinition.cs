@@ -1,11 +1,11 @@
 ﻿using Loupe.Extensibility;
 using Loupe.Extensibility.Client;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     [LoupeExtension("Loupe.Extension.Sample",
         ConfigurationEditor = typeof(SampleConfigurationDialog),
-        MachineConfiguration = typeof(SampleAddInConfiguration))]
+        CommonConfiguration = typeof(SampleAddInConfiguration))]
     public class SampleAddInDefinition : IExtensionDefinition
     {
         public void Register(IGlobalContext context, IExtensionDefinitionContext definitionContext)

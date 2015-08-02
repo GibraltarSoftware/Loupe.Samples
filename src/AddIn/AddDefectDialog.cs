@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Loupe.Extensibility.Data;
 
-namespace Loupe.Extension.Test
+namespace Loupe.Extension.Sample
 {
     public partial class AddDefectDialog : Form
     {
