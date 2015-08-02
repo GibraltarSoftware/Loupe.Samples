@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using Loupe.Extensibility;
 using Loupe.Extensibility.Client;
 using Loupe.Extension.FogBugz.Internal;
 
@@ -16,10 +17,11 @@ namespace Loupe.Extension.FogBugz
         private IRepositoryContext m_Context;
         private CommonConfig m_WorkingCommonConfig;
         private UserConfig m_WorkingUserConfig;
-        private ServerConfig m_WorkingHubConfig;
+        private ServerConfig m_WorkingServerConfig;
         private readonly Color m_InvalidEntryColor;
+        private bool m_CommonIsValid;
         private bool m_ServerIsValid;
-        private bool m_HubIsValid;
+        private bool m_UserIsValid;
         private bool m_Loading;
 
         private Dictionary<string, List<String>> m_ProductsAndApplications;
@@ -90,22 +92,34 @@ namespace Loupe.Extension.FogBugz
 
             //make SURE we have a configuration.
             m_WorkingCommonConfig = configuration.Common as CommonConfig;
-            m_WorkingHubConfig = configuration.Server as ServerConfig;
-            m_WorkingUserConfig = configuration.User as UserConfig;
+            m_WorkingServerConfig = configuration.Server as ServerConfig;
+
+            if (context.Environment == LoupeEnvironment.Desktop)
+                m_WorkingUserConfig = configuration.User as UserConfig;
 
             if (m_WorkingCommonConfig == null)
             {
                 m_WorkingCommonConfig = new CommonConfig();
             }
 
-            if (m_WorkingHubConfig == null)
+            if (m_WorkingServerConfig == null)
             {
-                m_WorkingHubConfig = new ServerConfig();
+                m_WorkingServerConfig = new ServerConfig();
             }
 
             if (m_WorkingUserConfig == null)
             {
                 m_WorkingUserConfig = new UserConfig();
+            }
+
+            if (context.Environment == LoupeEnvironment.Desktop)
+            {
+                localAccountInformation.Visible = true;
+            }
+            else
+            {
+                localAccountInformation.Visible = false;
+                m_UserIsValid = true;
             }
 
             if (initialConfiguration)
@@ -126,8 +140,10 @@ namespace Loupe.Extension.FogBugz
             if (result == DialogResult.OK)
             {
                 configuration.Common = m_WorkingCommonConfig;
-                configuration.User = m_WorkingUserConfig;
-                configuration.Server = m_WorkingHubConfig;
+                configuration.Server = m_WorkingServerConfig;
+
+                if (context.Environment == LoupeEnvironment.Desktop)
+                    configuration.User = m_WorkingUserConfig;
             }
 
             CaseStatusList.DataBindings.Clear();
@@ -156,7 +172,7 @@ namespace Loupe.Extension.FogBugz
                 txtLocalUserName.Text = userName;
                 txtLocalPassword.Text = password;
 
-                ValidateServer();
+                ValidateCommon();
 
                 if (m_WorkingConfiguration.ServerCredentialsAvailable)
                 {
@@ -170,10 +186,10 @@ namespace Loupe.Extension.FogBugz
                     hubAccountInformation.Enabled = false;
                 }
 
-                ValidateHubServer();
+                ValidateServer();
 
-                chkEnableAutomaticAnalysis.Checked = m_WorkingUserConfig.EnableAutomaticAnalysis || m_WorkingHubConfig.EnableAutomaticAnalysis;
-                chkAnalyzeOnHub.Checked = m_WorkingHubConfig.EnableAutomaticAnalysis;
+                chkEnableAutomaticAnalysis.Checked = m_WorkingUserConfig.EnableAutomaticAnalysis || m_WorkingServerConfig.EnableAutomaticAnalysis;
+                chkAnalyzeOnHub.Checked = m_WorkingServerConfig.EnableAutomaticAnalysis;
 
                 hubAccountInformation.Visible = true;
                 chkAnalyzeOnHub.Visible = true;
@@ -415,7 +431,7 @@ namespace Loupe.Extension.FogBugz
             }
         }
 
-        private void ValidateServer()
+        private void ValidateCommon()
         {
             bool isValid = true;
 
@@ -429,33 +445,12 @@ namespace Loupe.Extension.FogBugz
                 txtServerUrl.BackColor = SystemColors.Window;
             }
 
-            if (string.IsNullOrEmpty(txtLocalUserName.Text))
-            {
-                isValid = false;
-                txtLocalUserName.BackColor = m_InvalidEntryColor;
-            }
-            else
-            {
-                txtLocalUserName.BackColor = SystemColors.Window;
-            }
-
-            if (string.IsNullOrEmpty(txtLocalPassword.Text))
-            {
-                isValid = false;
-                txtLocalPassword.BackColor = m_InvalidEntryColor;
-            }
-            else
-            {
-                txtLocalPassword.BackColor = SystemColors.Window;
-            }
-
-            btnLocalTest.Enabled = isValid;
-            m_ServerIsValid = isValid;
+            m_CommonIsValid = isValid;
 
             UpdateValidState();
         }
 
-        private void ValidateHubServer()
+        private void ValidateServer()
         {
             bool isValid = true;
 
@@ -493,7 +488,37 @@ namespace Loupe.Extension.FogBugz
             }
 
             btnHubTest.Enabled = isValid;
-            m_HubIsValid = isValid;
+            m_ServerIsValid = isValid;
+
+            UpdateValidState();
+        }
+
+        private void ValidateUser()
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrEmpty(txtLocalUserName.Text))
+            {
+                isValid = false;
+                txtLocalUserName.BackColor = m_InvalidEntryColor;
+            }
+            else
+            {
+                txtLocalUserName.BackColor = SystemColors.Window;
+            }
+
+            if (string.IsNullOrEmpty(txtLocalPassword.Text))
+            {
+                isValid = false;
+                txtLocalPassword.BackColor = m_InvalidEntryColor;
+            }
+            else
+            {
+                txtLocalPassword.BackColor = SystemColors.Window;
+            }
+
+            btnLocalTest.Enabled = isValid;
+            m_UserIsValid = isValid;
 
             UpdateValidState();
         }
@@ -516,7 +541,7 @@ namespace Loupe.Extension.FogBugz
         private void UpdateValidState()
         {
             //OK is only enabled if all of our individual validities pass.
-            btnOK.Enabled = m_ServerIsValid && m_HubIsValid;
+            btnOK.Enabled = m_CommonIsValid && m_ServerIsValid && m_UserIsValid;
         }
 
         private void UpdateAutomaticAnalysis()
@@ -525,9 +550,9 @@ namespace Loupe.Extension.FogBugz
                 return;
 
 
-            if (m_WorkingHubConfig != null)
+            if (m_WorkingServerConfig != null)
             {
-                m_WorkingHubConfig.EnableAutomaticAnalysis = chkAnalyzeOnHub.Checked && chkEnableAutomaticAnalysis.Checked;
+                m_WorkingServerConfig.EnableAutomaticAnalysis = chkAnalyzeOnHub.Checked && chkEnableAutomaticAnalysis.Checked;
             }
 
             if (m_WorkingUserConfig != null)
@@ -549,7 +574,7 @@ namespace Loupe.Extension.FogBugz
             {
                 m_WorkingCommonConfig.Url = txtServerUrl.Text;
 
-                ValidateServer();
+                ValidateCommon();
             }
         }
 
@@ -560,7 +585,7 @@ namespace Loupe.Extension.FogBugz
                 //we don't leave the password in the text box, so we have to get it from the credential store.
                 m_WorkingConfiguration.SetUserCredentials(RepositoryController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
 
-                ValidateServer();
+                ValidateUser();
             }
         }
 
@@ -573,30 +598,30 @@ namespace Loupe.Extension.FogBugz
                     m_WorkingConfiguration.SetUserCredentials(RepositoryController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
                 }
 
-                ValidateServer();
+                ValidateUser();
             }
         }
 
         private void txtHubUserName_TextChanged(object sender, EventArgs e)
         {
-            if ((m_WorkingHubConfig != null) && (m_Loading == false))
+            if ((m_WorkingServerConfig != null) && (m_Loading == false))
             {
                 m_WorkingConfiguration.SetServerCredentials(RepositoryController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
 
-                ValidateHubServer();
+                ValidateServer();
             }
         }
 
         private void txtHubPassword_TextChanged(object sender, EventArgs e)
         {
-            if ((m_WorkingHubConfig != null) && (m_Loading == false))
+            if ((m_WorkingServerConfig != null) && (m_Loading == false))
             {
                 if (string.IsNullOrEmpty(txtHubPassword.Text) == false)
                 {
                     m_WorkingConfiguration.SetServerCredentials(RepositoryController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
                 }
 
-                ValidateHubServer();
+                ValidateServer();
             }
         }
 
