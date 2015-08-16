@@ -3,8 +3,7 @@ using Loupe.Extensibility.Client;
 
 namespace Loupe.Extension.FogBugz
 {
-    [LoupeExtension("Loupe.Extension.FogBugz",
-        ConfigurationEditor = typeof(ConfigurationEditor),
+    [LoupeExtension(ConfigurationEditor = typeof(ConfigurationEditor),
         CommonConfiguration = typeof(CommonConfig),
         UserConfiguration = typeof(UserConfig),
         ServerConfiguration = typeof(ServerConfig))]
@@ -12,6 +11,7 @@ namespace Loupe.Extension.FogBugz
     {
         public void Register(IGlobalContext context, IExtensionDefinitionContext definitionContext)
         {
+            definitionContext.RegisterRepositoryController(typeof(RepositoryController));
             definitionContext.RegisterRepositoryCommand(typeof(RepositoryCommand));
             definitionContext.RegisterSessionCommand(typeof(SessionAnalyzer));
             definitionContext.RegisterSessionAnalyzer(typeof(SessionAnalyzer));

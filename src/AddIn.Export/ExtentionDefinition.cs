@@ -6,8 +6,7 @@ namespace Loupe.Extension.Export
     /// <summary>
     /// Top-level class for integrating with the Loupe framework
     /// </summary>
-    [LoupeExtension("Loupe.Extension.Export", 
-        ConfigurationEditor = typeof(ExportConfigurationDialog),
+    [LoupeExtension(ConfigurationEditor = typeof(ExportConfigurationDialog),
         MachineConfiguration = typeof(ExportAddInConfiguration))]
     public class ExtentionDefinition : IExtensionDefinition
     {

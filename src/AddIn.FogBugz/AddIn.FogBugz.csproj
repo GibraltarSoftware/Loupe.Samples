@@ -59,7 +59,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2630\lib\net20\Loupe.Extensibility.dll</HintPath>
+      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2692\lib\net20\Loupe.Extensibility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

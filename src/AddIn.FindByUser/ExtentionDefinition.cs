@@ -6,8 +6,7 @@ namespace Loupe.Extension.FindByUser
     /// <summary>
     /// Top-level class for integrating with the Loupe framework
     /// </summary>
-    [LoupeExtension("Loupe.Extension.FindByUser", 
-        ConfigurationEditor = typeof(FindByUserConfigurationDialog),
+    [LoupeExtension(ConfigurationEditor = typeof(FindByUserConfigurationDialog),
         CommonConfiguration = typeof(FindByUserConfiguration))]
     public class ExtentionDefinition : IExtensionDefinition
     {

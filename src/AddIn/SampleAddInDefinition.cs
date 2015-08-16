@@ -3,8 +3,7 @@ using Loupe.Extensibility.Client;
 
 namespace Loupe.Extension.Sample
 {
-    [LoupeExtension("Loupe.Extension.Sample",
-        ConfigurationEditor = typeof(SampleConfigurationDialog),
+    [LoupeExtension(ConfigurationEditor = typeof(SampleConfigurationDialog),
         CommonConfiguration = typeof(SampleAddInConfiguration))]
     public class SampleAddInDefinition : IExtensionDefinition
     {
