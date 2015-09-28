@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// Dialog to enter a new FogBugz case from a selected error.
@@ -22,12 +21,12 @@ namespace Gibraltar.AddIn.FogBugz.Internal
 
         private string m_Fingerprint;
         private string m_SessionIdMessage;
-        private AddInController m_Controller;
+        private RepositoryController m_Controller;
 
         private bool m_UseFogBugzFonts;
         private IList<ILogMessage> m_LogMessages;
         private ILogMessage m_PrimaryMessage;
-        private IAddInContext m_Context;
+        private IRepositoryContext m_Context;
 
         private delegate void ThreadSafeDisplayDefectInvoker(string caseId, string projectName, string areaName);
 
@@ -44,7 +43,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
         /// <summary>
         /// Process a user's Add Defect request
         /// </summary>
-        public DialogResult AddDefect(IAddInContext context, IList<ILogMessage> messages, AddInController controller, FBApi api)
+        public DialogResult AddDefect(IRepositoryContext context, IList<ILogMessage> messages, RepositoryController controller, FBApi api)
         {
             // It shouldn't happen that we get called with no messages selected,
             // but check for it anyway.
@@ -211,7 +210,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
             {
                 try
                 {
-                    //now add these items to the project selction area.
+                    //now add these items to the project selection area.
                     ProjectSelection.Items.Clear();
                     ProjectSelection.DataSource = new List<string>(m_ProjectsAndAreas.Keys); //data source requires a list
 
@@ -229,7 +228,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
                     if (lastMessageIndex > 0)
                         builder.AppendLine();
 
-                    // The primary message is the last of the selected emssages
+                    // The primary message is the last of the selected messages
                     LogMessageFormatter formatter = new LogMessageFormatter(m_PrimaryMessage);
                     builder.Append(formatter.GetLogMessageDetails());
 

@@ -3,29 +3,31 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
+using Loupe.Extensibility;
+using Loupe.Extensibility.Client;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
-    /// User interface dialog for managing the Fog Bugz integration configuration
+    /// User interface dialog for managing the FogBugz integration configuration
     /// </summary>
     public partial class ConfigurationEditor : Form, IConfigurationEditor
     {
-        private IAddInContext m_Context;
+        private IRepositoryContext m_Context;
         private CommonConfig m_WorkingCommonConfig;
         private UserConfig m_WorkingUserConfig;
-        private HubConfig m_WorkingHubConfig;
+        private ServerConfig m_WorkingServerConfig;
         private readonly Color m_InvalidEntryColor;
+        private bool m_CommonIsValid;
         private bool m_ServerIsValid;
-        private bool m_HubIsValid;
+        private bool m_UserIsValid;
         private bool m_Loading;
 
         private Dictionary<string, List<String>> m_ProductsAndApplications;
         private Dictionary<string, List<String>> m_ProjectsAndAreas;
         private Dictionary<int, string> m_Priorities;
-        private IAddInConfiguration m_WorkingConfiguration;
+        private IRepositoryConfiguration m_WorkingConfiguration;
 
         public class NameValuePair<T>
         {
@@ -47,7 +49,7 @@ namespace Gibraltar.AddIn.FogBugz
             m_InvalidEntryColor = Color.LightPink;
 
             //prepopulate our combos
-            NameValuePair<CaseStatus>[] statusList = new [] {
+            NameValuePair<CaseStatus>[] statusList = new[] {
                                                              new NameValuePair<CaseStatus>("Any / All", CaseStatus.All),
                                                              new NameValuePair<CaseStatus>("Active", CaseStatus.Active),
                                                              new NameValuePair<CaseStatus>("Resolved", CaseStatus.Resolved),
@@ -75,14 +77,14 @@ namespace Gibraltar.AddIn.FogBugz
         #region Public Properties and Methods
 
         /// <summary>
-        /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
+        /// Called by Loupe to have the configuration editor display itself and edit the provided configuration
         /// </summary>
         /// <param name="context">The Add In Context provides a connection to the hosting environment.</param><param name="configuration">The current configuration.</param><param name="initialConfiguration">Indicates if the configuration has ever completed in the current environment.</param>
         /// <returns>
         /// DialogResult.OK if the configuration is complete and should be accepted as the new configuration.  Any other result to cancel.  If this
         ///             is the initial configuration and it is not OK the add in will not be enabled.
         /// </returns>
-        public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IRepositoryContext context, IRepositoryConfiguration configuration, bool initialConfiguration)
         {
             m_Context = context;
 
@@ -90,22 +92,34 @@ namespace Gibraltar.AddIn.FogBugz
 
             //make SURE we have a configuration.
             m_WorkingCommonConfig = configuration.Common as CommonConfig;
-            m_WorkingHubConfig = m_Context.IsServerConfigured ? configuration.Hub as HubConfig : null;
-            m_WorkingUserConfig = configuration.User as UserConfig;
+            m_WorkingServerConfig = configuration.Server as ServerConfig;
+
+            if (context.Environment == LoupeEnvironment.Desktop)
+                m_WorkingUserConfig = configuration.User as UserConfig;
 
             if (m_WorkingCommonConfig == null)
             {
                 m_WorkingCommonConfig = new CommonConfig();
             }
 
-            if ((m_WorkingHubConfig == null) && (m_Context.IsServerConfigured))
+            if (m_WorkingServerConfig == null)
             {
-                m_WorkingHubConfig = new HubConfig();
+                m_WorkingServerConfig = new ServerConfig();
             }
 
             if (m_WorkingUserConfig == null)
             {
                 m_WorkingUserConfig = new UserConfig();
+            }
+
+            if (context.Environment == LoupeEnvironment.Desktop)
+            {
+                localAccountInformation.Visible = true;
+            }
+            else
+            {
+                localAccountInformation.Visible = false;
+                m_UserIsValid = true;
             }
 
             if (initialConfiguration)
@@ -126,12 +140,10 @@ namespace Gibraltar.AddIn.FogBugz
             if (result == DialogResult.OK)
             {
                 configuration.Common = m_WorkingCommonConfig;
-                configuration.User = m_WorkingUserConfig;
+                configuration.Server = m_WorkingServerConfig;
 
-                if (m_Context.IsServerConfigured)
-                {
-                    configuration.Hub = m_WorkingHubConfig;
-                }
+                if (context.Environment == LoupeEnvironment.Desktop)
+                    configuration.User = m_WorkingUserConfig;
             }
 
             CaseStatusList.DataBindings.Clear();
@@ -150,46 +162,37 @@ namespace Gibraltar.AddIn.FogBugz
 
             try
             {
-                //initialize our display from the curent configuration
+                //initialize our display from the current configuration
                 txtServerUrl.Text = m_WorkingCommonConfig.Url;
 
                 //and lets see if we have any credentials...
                 string userName, password;
-                m_WorkingConfiguration.GetUserCredentials(AddInController.ServerCredentialsKey, out userName, out password);
+                m_WorkingConfiguration.GetUserCredentials(RepositoryController.ServerCredentialsKey, out userName, out password);
 
                 txtLocalUserName.Text = userName;
-                txtLocalPassword.Text = password; 
+                txtLocalPassword.Text = password;
 
-                ValidateServer();
+                ValidateCommon();
 
-                if (m_Context.IsServerConfigured)
+                if (m_WorkingConfiguration.ServerCredentialsAvailable)
                 {
-                    if (m_WorkingConfiguration.HubCredentialsAvailable)
-                    {
-                        m_WorkingConfiguration.GetHubCredentials(AddInController.ServerCredentialsKey, out userName, out password);
-                        txtHubUserName.Text = userName;
-                        txtHubPassword.Text = password;
-                        hubAccountInformation.Enabled = true;
-                    }
-                    else
-                    {
-                        hubAccountInformation.Enabled = false;
-                    }
-
-                    ValidateHubServer();
-
-                    chkEnableAutomaticAnalysis.Checked = m_WorkingUserConfig.EnableAutomaticAnalysis || m_WorkingHubConfig.EnableAutomaticAnalysis;
-                    chkAnalyzeOnHub.Checked = m_WorkingHubConfig.EnableAutomaticAnalysis;
-
-                    hubAccountInformation.Visible = true;
-                    chkAnalyzeOnHub.Visible = true;
+                    m_WorkingConfiguration.GetServerCredentials(RepositoryController.ServerCredentialsKey, out userName, out password);
+                    txtHubUserName.Text = userName;
+                    txtHubPassword.Text = password;
+                    hubAccountInformation.Enabled = true;
                 }
                 else
                 {
-                    hubAccountInformation.Visible = false;
-                    chkAnalyzeOnHub.Visible = false;
-                    chkEnableAutomaticAnalysis.Checked = m_WorkingUserConfig.EnableAutomaticAnalysis;
+                    hubAccountInformation.Enabled = false;
                 }
+
+                ValidateServer();
+
+                chkEnableAutomaticAnalysis.Checked = m_WorkingUserConfig.EnableAutomaticAnalysis || m_WorkingServerConfig.EnableAutomaticAnalysis;
+                chkAnalyzeOnHub.Checked = m_WorkingServerConfig.EnableAutomaticAnalysis;
+
+                hubAccountInformation.Visible = true;
+                chkAnalyzeOnHub.Visible = true;
 
                 UpdateValidState();
 
@@ -197,7 +200,7 @@ namespace Gibraltar.AddIn.FogBugz
                 //populate our grid of cases
                 mappingsGrid.DataSource = m_WorkingCommonConfig;
                 mappingsGrid.DataMember = "Mappings";
-                mappingsGrid.BindingContext= new BindingContext(); //forces it to load right now.
+                mappingsGrid.BindingContext = new BindingContext(); //forces it to load right now.
             }
             finally
             {
@@ -221,7 +224,7 @@ namespace Gibraltar.AddIn.FogBugz
             if ((m_ProductsAndApplications == null) || (m_ProjectsAndAreas == null))
             {
                 string userName, password;
-                m_WorkingConfiguration.GetUserCredentials(AddInController.ServerCredentialsKey, out userName, out password);
+                m_WorkingConfiguration.GetUserCredentials(RepositoryController.ServerCredentialsKey, out userName, out password);
 
                 if (string.IsNullOrEmpty(userName))
                 {
@@ -272,7 +275,7 @@ namespace Gibraltar.AddIn.FogBugz
         {
             //since we're called from the threadpool we have to catch exceptions or the application will fail.
             try
-            {                
+            {
                 object[] args = (object[])state;
                 string userName = (string)args[0];
                 string password = (string)args[1];
@@ -285,13 +288,13 @@ namespace Gibraltar.AddIn.FogBugz
             }
             catch (Exception ex)
             {
-                m_Context.Log.ReportException(ex, AddInController.LogCategory, true, false);
+                m_Context.Log.ReportException(ex, RepositoryController.LogCategory, true, false);
             }
 
             Mapping existingMapping = state as Mapping;
             if (existingMapping == null)
             {
-                ThreadSafeAddMapping();                
+                ThreadSafeAddMapping();
             }
             else
             {
@@ -351,7 +354,7 @@ namespace Gibraltar.AddIn.FogBugz
             if (InvokeRequired)
             {
                 ThreadSafeEditMappingHandler invoker = ThreadSafeEditMapping;
-                Invoke(invoker, new object[] {mapping});
+                Invoke(invoker, new object[] { mapping });
             }
             else
             {
@@ -382,7 +385,7 @@ namespace Gibraltar.AddIn.FogBugz
                 UseWaitCursor = true;
 
                 string userName, password;
-                m_WorkingConfiguration.GetUserCredentials(AddInController.ServerCredentialsKey, out userName, out password);
+                m_WorkingConfiguration.GetUserCredentials(RepositoryController.ServerCredentialsKey, out userName, out password);
 
                 TestServerConnection(m_WorkingCommonConfig.Url, userName, password);
             }
@@ -401,7 +404,7 @@ namespace Gibraltar.AddIn.FogBugz
                 UseWaitCursor = true;
 
                 string userName, password;
-                m_WorkingConfiguration.GetHubCredentials(AddInController.ServerCredentialsKey, out userName, out password);
+                m_WorkingConfiguration.GetServerCredentials(RepositoryController.ServerCredentialsKey, out userName, out password);
 
                 TestServerConnection(m_WorkingCommonConfig.Url, userName, password);
             }
@@ -428,7 +431,7 @@ namespace Gibraltar.AddIn.FogBugz
             }
         }
 
-        private void ValidateServer()
+        private void ValidateCommon()
         {
             bool isValid = true;
 
@@ -442,33 +445,12 @@ namespace Gibraltar.AddIn.FogBugz
                 txtServerUrl.BackColor = SystemColors.Window;
             }
 
-            if (string.IsNullOrEmpty(txtLocalUserName.Text))
-            {
-                isValid = false;
-                txtLocalUserName.BackColor = m_InvalidEntryColor;
-            }
-            else
-            {
-                txtLocalUserName.BackColor = SystemColors.Window;
-            }
-
-            if (string.IsNullOrEmpty(txtLocalPassword.Text))
-            {
-                isValid = false;
-                txtLocalPassword.BackColor = m_InvalidEntryColor;
-            }
-            else
-            {
-                txtLocalPassword.BackColor = SystemColors.Window;
-            }
-
-            btnLocalTest.Enabled = isValid;
-            m_ServerIsValid = isValid;
+            m_CommonIsValid = isValid;
 
             UpdateValidState();
         }
 
-        private void ValidateHubServer()
+        private void ValidateServer()
         {
             bool isValid = true;
 
@@ -482,7 +464,7 @@ namespace Gibraltar.AddIn.FogBugz
                 txtServerUrl.BackColor = SystemColors.Window;
             }
 
-            if (m_WorkingConfiguration.HubCredentialsAvailable)
+            if (m_WorkingConfiguration.ServerCredentialsAvailable)
             {
                 if ((chkAnalyzeOnHub.Checked) && (string.IsNullOrEmpty(txtHubUserName.Text)))
                 {
@@ -506,7 +488,37 @@ namespace Gibraltar.AddIn.FogBugz
             }
 
             btnHubTest.Enabled = isValid;
-            m_HubIsValid = isValid;
+            m_ServerIsValid = isValid;
+
+            UpdateValidState();
+        }
+
+        private void ValidateUser()
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrEmpty(txtLocalUserName.Text))
+            {
+                isValid = false;
+                txtLocalUserName.BackColor = m_InvalidEntryColor;
+            }
+            else
+            {
+                txtLocalUserName.BackColor = SystemColors.Window;
+            }
+
+            if (string.IsNullOrEmpty(txtLocalPassword.Text))
+            {
+                isValid = false;
+                txtLocalPassword.BackColor = m_InvalidEntryColor;
+            }
+            else
+            {
+                txtLocalPassword.BackColor = SystemColors.Window;
+            }
+
+            btnLocalTest.Enabled = isValid;
+            m_UserIsValid = isValid;
 
             UpdateValidState();
         }
@@ -523,13 +535,13 @@ namespace Gibraltar.AddIn.FogBugz
             {
                 btnCopy.Enabled = true;
                 btnRemoveRule.Enabled = true;
-            }            
+            }
         }
 
         private void UpdateValidState()
         {
             //OK is only enabled if all of our individual validities pass.
-            btnOK.Enabled = m_ServerIsValid && m_HubIsValid;
+            btnOK.Enabled = m_CommonIsValid && m_ServerIsValid && m_UserIsValid;
         }
 
         private void UpdateAutomaticAnalysis()
@@ -538,16 +550,15 @@ namespace Gibraltar.AddIn.FogBugz
                 return;
 
 
-            if (m_WorkingHubConfig != null)
+            if (m_WorkingServerConfig != null)
             {
-                m_WorkingHubConfig.EnableAutomaticAnalysis = chkAnalyzeOnHub.Checked && chkEnableAutomaticAnalysis.Checked;
+                m_WorkingServerConfig.EnableAutomaticAnalysis = chkAnalyzeOnHub.Checked && chkEnableAutomaticAnalysis.Checked;
             }
 
             if (m_WorkingUserConfig != null)
             {
-                //depends on whether hub is configured
-                m_WorkingUserConfig.EnableAutomaticAnalysis = (m_Context.IsServerConfigured) ? !chkAnalyzeOnHub.Checked && chkEnableAutomaticAnalysis.Checked
-                    : chkEnableAutomaticAnalysis.Checked;
+                m_WorkingUserConfig.EnableAutomaticAnalysis = !chkAnalyzeOnHub.Checked &&
+                                                              chkEnableAutomaticAnalysis.Checked;
             }
 
             chkAnalyzeOnHub.Enabled = chkEnableAutomaticAnalysis.Checked;
@@ -563,7 +574,7 @@ namespace Gibraltar.AddIn.FogBugz
             {
                 m_WorkingCommonConfig.Url = txtServerUrl.Text;
 
-                ValidateServer();
+                ValidateCommon();
             }
         }
 
@@ -572,9 +583,9 @@ namespace Gibraltar.AddIn.FogBugz
             if ((m_WorkingUserConfig != null) && (m_Loading == false))
             {
                 //we don't leave the password in the text box, so we have to get it from the credential store.
-                m_WorkingConfiguration.SetUserCredentials(AddInController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
+                m_WorkingConfiguration.SetUserCredentials(RepositoryController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
 
-                ValidateServer();
+                ValidateUser();
             }
         }
 
@@ -584,33 +595,33 @@ namespace Gibraltar.AddIn.FogBugz
             {
                 if (string.IsNullOrEmpty(txtLocalPassword.Text) == false)
                 {
-                    m_WorkingConfiguration.SetUserCredentials(AddInController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
+                    m_WorkingConfiguration.SetUserCredentials(RepositoryController.ServerCredentialsKey, txtLocalUserName.Text, txtLocalPassword.Text);
                 }
 
-                ValidateServer();
+                ValidateUser();
             }
         }
 
         private void txtHubUserName_TextChanged(object sender, EventArgs e)
         {
-            if ((m_WorkingHubConfig != null) && (m_Loading == false))
+            if ((m_WorkingServerConfig != null) && (m_Loading == false))
             {
-                m_WorkingConfiguration.SetHubCredentials(AddInController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
+                m_WorkingConfiguration.SetServerCredentials(RepositoryController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
 
-                ValidateHubServer();
+                ValidateServer();
             }
         }
 
         private void txtHubPassword_TextChanged(object sender, EventArgs e)
         {
-            if ((m_WorkingHubConfig != null) && (m_Loading == false))
+            if ((m_WorkingServerConfig != null) && (m_Loading == false))
             {
                 if (string.IsNullOrEmpty(txtHubPassword.Text) == false)
                 {
-                    m_WorkingConfiguration.SetHubCredentials(AddInController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
+                    m_WorkingConfiguration.SetServerCredentials(RepositoryController.ServerCredentialsKey, txtHubUserName.Text, txtHubPassword.Text);
                 }
 
-                ValidateHubServer();
+                ValidateServer();
             }
         }
 

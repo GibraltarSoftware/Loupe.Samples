@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.Export
+﻿namespace Loupe.Extension.Export
 {
     /// <summary>
     /// Enumeration of the supported formats for exporting log messages

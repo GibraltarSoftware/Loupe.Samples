@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+﻿using System.Collections.Generic;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
-    /// This class implements a LogMessageCommand allowing a Gibraltar user to create an new FogBugz case
+    /// This class implements a LogMessageCommand allowing a Loupe user to create an new FogBugz case
     /// based on the selected log messages.
     /// </summary>
     /// <remarks>
@@ -23,8 +22,8 @@ namespace Gibraltar.AddIn.FogBugz
     {
         private const string AddDefectCommandName = "addDefect";
 
-        private IAddInContext m_Context;
-        private AddInController m_Controller;
+        private ISessionContext m_Context;
+        private RepositoryController m_Controller;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -40,17 +39,17 @@ namespace Gibraltar.AddIn.FogBugz
         /// <remarks>
         /// If any exception is thrown during this call the add-in will not be loaded.
         /// </remarks>
-        public void Initialize(ISessionAddInContext context)
+        public void Initialize(ISessionContext context)
         {
             m_Context = context;
-            m_Controller = (AddInController)m_Context.Controller;
+            m_Controller = (RepositoryController)m_Context.RepositoryController;
 
             //load up our baseline configuration
             ConfigurationChanged();
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {

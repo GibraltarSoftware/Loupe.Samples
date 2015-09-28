@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     internal class FogBugzCaseReader
     {
-        private readonly AddInController m_Controller;
+        private readonly RepositoryController m_Controller;
         public int CaseId { get; private set; }
         public List<Guid> SessionIds { get; private set; }
         public string Title { get; private set; }
@@ -18,7 +18,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
         public string LastUpdatedBy { get; private set; }
         public string LatestSummary { get; private set; }
 
-        public FogBugzCaseReader(AddInController controller, int caseId)
+        public FogBugzCaseReader(RepositoryController controller, int caseId)
         {
             m_Controller = controller;
             Load(m_Controller.GetApi(), caseId);

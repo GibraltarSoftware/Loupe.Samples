@@ -4,17 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     public sealed partial class SessionFilterView : UserControl, ISessionSummaryView
     {
         private const int DataRetentionDays = 30;
         private readonly object _lock = new object(); //used for coordination between threads
         private bool _initialized;
-        private IRepositoryAddInContext _context;
+        private IRepositoryContext _context;
         private string _selectedUsername;
 
         private string _title;
@@ -92,7 +92,7 @@ namespace Gibraltar.AddIn.FindByUser
             }
             catch (Exception ex)
             {
-                _context.Log.RecordException(ex, FindByUserAddIn.LogCategory, true);
+                _context.Log.RecordException(ex, ExtentionDefinition.LogCategory, true);
                 ThreadSafeRefreshUsers(new List<string>());
                 Enabled = true;
             }
@@ -177,7 +177,7 @@ namespace Gibraltar.AddIn.FindByUser
             }
             catch (Exception ex)
             {
-                _context.Log.ReportException(ex, FindByUserAddIn.LogCategory, true, false);
+                _context.Log.ReportException(ex, ExtentionDefinition.LogCategory, true, false);
                 lock (_lock)
                 {
                     _sessionIds = new HashSet<Guid>();
@@ -330,7 +330,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <remarks>
         /// If any exception is thrown during this call this view will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             _context = context;
             _initialized = true;
@@ -338,7 +338,7 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -354,7 +354,7 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// Called by the contaioner to indicate this view is no longer the active summary view.
+        /// Called by the container to indicate this view is no longer the active summary view.
         /// </summary>
         public void DeactivateView()
         {

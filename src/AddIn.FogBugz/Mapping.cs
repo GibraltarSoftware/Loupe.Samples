@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// Part of the config that defines a single mapping from
-    /// a set of Gibraltar sessions to a FogBugz project
+    /// a set of Loupe sessions to a FogBugz project
     /// </summary>
     [Serializable]
     [XmlRoot("mapping")]
@@ -28,13 +28,13 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Must match Product reported to Gibraltar for issues to be reported to FogBugz or null to match all products.
+        /// Must match Product reported to Loupe for issues to be reported to FogBugz or null to match all products.
         /// </summary>
         [XmlAttribute("product")]
         public string Product { get; set; }
 
         /// <summary>
-        /// Must match Application reported to Gibraltar for issues to be reported to FogBugz or null to match all applications.
+        /// Must match Application reported to Loupe for issues to be reported to FogBugz or null to match all applications.
         /// </summary>
         [XmlAttribute("application")]
         public string Application { get; set; }

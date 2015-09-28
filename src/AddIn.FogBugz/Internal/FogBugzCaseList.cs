@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// Collection of FogBugzCaseInfo for the FogBugzSummaryView
     /// </summary>
     internal class FogBugzCaseList
     {
-        private readonly AddInController m_Controller;
+        private readonly RepositoryController m_Controller;
         public List<FogBugzCaseInfo> Cases { get; private set; }
        
         /// <summary>
@@ -17,7 +17,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
         /// </summary>
         /// <param name="controller"></param>
         /// <param name="filter">The filter string is created by FogBugzFilter</param>
-        public FogBugzCaseList(AddInController controller, string filter)
+        public FogBugzCaseList(RepositoryController controller, string filter)
         {
             m_Controller = controller;
             Load(filter);

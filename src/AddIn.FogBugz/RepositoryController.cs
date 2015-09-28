@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Diagnostics;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// The central controller for the entire set of FogBugz integration extensions
     /// </summary>
-    [GibraltarAddIn("FogBugz", Description = "Integrates with FogBugz providing automatic defect management and lookup",
-        ConfigurationEditor = typeof(ConfigurationEditor),
-        CommonConfiguration = typeof(CommonConfig),
-        UserConfiguration = typeof(UserConfig),
-        HubConfiguration = typeof(HubConfig))]
-    public class AddInController : IAddInController
+    public class RepositoryController : IRepositoryController
     {
         public const string LogCategory = "AddIn.FogBugz";
         public const string ServerCredentialsKey = "FogBugz";
 
-        private IAddInContext m_Context;
+        private IRepositoryContext m_Context;
         private CommonConfig m_CommonConfig;
         private UserConfig m_UserConfig;
-        private HubConfig m_HubConfig;
+        private ServerConfig m_HubConfig;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -32,45 +28,22 @@ namespace Gibraltar.AddIn.FogBugz
         {
         }
 
-        /// <summary>
-        /// Called to initialize the add in.
-        /// </summary>
-        /// <param name="context">A standard interface to the hosting environment for the add in, provided to all the different extensions that get loaded.  The controller
-        ///             can keep this object for its entire lifecycle.</param><param name="controllerContext">Additional methods available to the repository controller during initialization.  This object should not be held between calls.</param>
-        /// <remarks>
-        /// <para>
-        /// If any exception is thrown during this call this add in will not be loaded.
-        /// </para>
-        /// <para>
-        /// During initialization the controller should register each of the other extension types that should be available to end users through appropriate calls to
-        ///             the controllerContext.  These objects will be created and initialized as requred and provided the same IAddInContext object instance provided to this
-        ///             method to enable coordination between all of the components.
-        /// </para>
-        /// </remarks>
-        public void Initialize(IAddInContext context, IAddInControllerContext controllerContext)
+
+        public void Initialize(IRepositoryContext context)
         {
-            //store off the context - we use it later if we get a config update event.
             m_Context = context;
 
-            controllerContext.RegisterCommand(typeof(AddInCommand));
-            controllerContext.RegisterSessionCommand(typeof(SessionAnalysisAddIn));
-            controllerContext.RegisterSessionAnalyzer(typeof(SessionAnalysisAddIn));
-            controllerContext.RegisterLogMessageCommand(typeof(AddDefectCommand));
-            controllerContext.RegisterSessionSummaryView(typeof(FogBugzSummaryView), "FogBugz Case List", "Find sessions associated with FogBugz cases", null);
-            controllerContext.RegisterSessionSummaryView(typeof(FogBugzLookupView), "FogBugz Lookup", "Find sessions associated with a FogBugz Case Id", null);
-
-            //and load up our initial configuration
             ConfigurationChanged();
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
             m_CommonConfig = (CommonConfig)m_Context.Configuration.Common;
             m_UserConfig = (UserConfig)m_Context.Configuration.User;
-            m_HubConfig = (HubConfig)m_Context.Configuration.Hub;
+            m_HubConfig = (ServerConfig)m_Context.Configuration.Server;
         }
 
 
@@ -99,7 +72,7 @@ namespace Gibraltar.AddIn.FogBugz
         /// <summary>
         /// Our hub FogBugz configuration.  May be null if no hub is configured
         /// </summary>
-        public HubConfig HubConfiguration { get { return m_HubConfig; } }
+        public ServerConfig HubConfiguration { get { return m_HubConfig; } }
 
         /// <summary>
         /// Our user FogBugz configuration.  May be null if executing on Hub.
@@ -120,7 +93,7 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Create a new web browser to open the FogBugz server with the url
+        /// Create a new web browser to open the FogBugz server with the URL
         /// </summary>
         /// <param name="pathAndArgs"></param>
         public void WebSiteOpen(string pathAndArgs)
@@ -226,9 +199,9 @@ namespace Gibraltar.AddIn.FogBugz
         {
             string url = m_CommonConfig.Url;
             string userName, password;
-            if (m_Context.Environment == GibraltarEnvironment.HubServer)
+            if (m_Context.Environment == LoupeEnvironment.Server)
             {
-                m_Context.Configuration.GetHubCredentials(ServerCredentialsKey, out userName, out password);
+                m_Context.Configuration.GetServerCredentials(ServerCredentialsKey, out userName, out password);
             }
             else
             {
@@ -237,25 +210,25 @@ namespace Gibraltar.AddIn.FogBugz
 
             if (string.IsNullOrEmpty(url))
             {
-                throw new InvalidOperationException("No FogBugz server url has been configured to connect to.");
+                throw new InvalidOperationException("No FogBugz server URL has been configured to connect to.");
             }
 
             if (string.IsNullOrEmpty(userName))
             {
                 throw new InvalidOperationException(string.Format("No account has been provided to connect to FogBugz with.  Please configure a {0} account.",
-                    (m_Context.Environment == GibraltarEnvironment.HubServer) ? "hub" : "personal"));
+                    (m_Context.Environment == LoupeEnvironment.Server) ? "server" : "personal"));
             }
 
             // Throw an exception if we can't connect with FogBugz
             FBApi api;
             try
             {
-                m_Context.Log.Verbose(LogCategory, "Connecting to FogBugz Server", "Server Url: {0}\r\nUser Name: {1}", url, userName);
+                m_Context.Log.Verbose(LogCategory, "Connecting to FogBugz Server", "Server URL: {0}\r\nUser Name: {1}", url, userName);
                 api = new FBApi(url, userName, password);
             }
             catch (Exception ex)
             {
-                m_Context.Log.Error(ex, LogCategory, "Failed to connect to FogBugz Server", "Server Url: {0}\r\nUser Name: {1}\r\nException: {2}", url, userName, ex.Message);
+                m_Context.Log.Error(ex, LogCategory, "Failed to connect to FogBugz Server", "Server URL: {0}\r\nUser Name: {1}\r\nException: {2}", url, userName, ex.Message);
                 throw new ApplicationException("Could not contact FogBugz Server", ex);
             }
 

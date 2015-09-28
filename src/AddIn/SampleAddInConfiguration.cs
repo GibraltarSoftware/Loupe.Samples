@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Sample
 {
     /// <summary>
-    /// Stores the configuration of of our sample addin
+    /// Stores the configuration of our sample addin
     /// </summary>
     [Serializable]
     public class SampleAddInConfiguration

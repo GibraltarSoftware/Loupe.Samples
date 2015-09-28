@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     /// <summary>
     /// Core data and logic associated with exporting session data
@@ -16,9 +16,9 @@ namespace Gibraltar.AddIn.Export
         public HashSet<string> Applications { get; private set; }
         public HashSet<string> Metrics { get; private set; }
         private ExportAddInConfiguration Config { get; set; }
-        private readonly IRepositoryAddInContext _context;
+        private readonly IRepositoryContext _context;
 
-        public MetricExportDefinition(IRepositoryAddInContext context, ExportAddInConfiguration config)
+        public MetricExportDefinition(IRepositoryContext context, ExportAddInConfiguration config)
         {
             _context = context;
             Config = config;

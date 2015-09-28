@@ -1,12 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Xml;
-using System.Net;
-using System.IO;
-using System.Collections;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// Provides access to a FogBugz server

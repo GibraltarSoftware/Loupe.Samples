@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// Configuration specific to a single user on a computer

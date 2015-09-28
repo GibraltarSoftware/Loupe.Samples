@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.FindByUser
+﻿namespace Loupe.Extension.FindByUser
 {
     sealed partial class SessionFilterView
     {

@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.FogBugz.Internal
+﻿namespace Loupe.Extension.FogBugz.Internal
 {
     partial class NewMappingDialog
     {
@@ -132,7 +132,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Map Gibraltar Sessions For:";
+            this.label2.Text = "Map Loupe Sessions For:";
             // 
             // ProductSelection
             // 

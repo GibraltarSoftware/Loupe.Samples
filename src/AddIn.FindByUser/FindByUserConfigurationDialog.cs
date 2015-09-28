@@ -1,11 +1,11 @@
 ﻿using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
+using Loupe.Extensibility.Client;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     public partial class FindByUserConfigurationDialog : Form, IConfigurationEditor
     {
-        private IAddInContext _context;
+        private IRepositoryContext _context;
 
         public FindByUserConfigurationDialog()
         {
@@ -13,12 +13,12 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// Called by Gibraltar to have the configuration editor display itself and edit the provided configuration
+        /// Called by Loupe to have the configuration editor display itself and edit the provided configuration
         /// </summary>
-        public DialogResult EditConfiguration(IAddInContext context, IAddInConfiguration configuration, bool initialConfiguration)
+        public DialogResult EditConfiguration(IRepositoryContext context, IRepositoryConfiguration configuration, bool initialConfiguration)
         {
             _context = context;
-            _context.Log.Verbose(FindByUserAddIn.LogCategory, "Begin editing Session Alert config", null);
+            _context.Log.Verbose(ExtentionDefinition.LogCategory, "Begin editing Session Alert config", null);
 
             var newConfig = configuration.Common as FindByUserConfiguration ?? new FindByUserConfiguration();
 
@@ -40,7 +40,7 @@ namespace Gibraltar.AddIn.FindByUser
             }
             else
             {
-                _context.Log.Verbose(FindByUserAddIn.LogCategory, "Cancelling FindByUser config dialog", null);
+                _context.Log.Verbose(ExtentionDefinition.LogCategory, "Canceling FindByUser config dialog", null);
             }
 
             return result;
@@ -60,7 +60,7 @@ namespace Gibraltar.AddIn.FindByUser
             else
             {
                 comboBox.SelectedIndex = 0;
-                _context.Log.Warning(FindByUserAddIn.LogCategory, "Cannot assign illegal value to combobox",
+                _context.Log.Warning(ExtentionDefinition.LogCategory, "Cannot assign illegal value to combobox",
                     "\"{0}\" is not a legal value for {1}", text, comboBox.Name);
             }
         }
@@ -68,10 +68,10 @@ namespace Gibraltar.AddIn.FindByUser
         private void LogConfigurationChanges(FindByUserConfiguration newConfig, FindByUserConfiguration oldConfig)
         {
             if (oldConfig.Equals(newConfig))
-                _context.Log.Verbose(FindByUserAddIn.LogCategory, "No change to FindByUser config", null);
+                _context.Log.Verbose(ExtentionDefinition.LogCategory, "No change to FindByUser config", null);
             else
             {
-                _context.Log.Information(FindByUserAddIn.LogCategory, "FindByUser configuration changed",
+                _context.Log.Information(ExtentionDefinition.LogCategory, "FindByUser configuration changed",
                     string.Format("New Config: {0}\n\nOld Config: {1}", newConfig, oldConfig));
             }
         }

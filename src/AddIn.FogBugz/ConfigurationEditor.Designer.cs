@@ -1,4 +1,4 @@
-﻿namespace Gibraltar.AddIn.FogBugz
+﻿namespace Loupe.Extension.FogBugz
 {
     partial class ConfigurationEditor
     {
@@ -186,7 +186,7 @@
             this.lblInstruction.Name = "lblInstruction";
             this.lblInstruction.Size = new System.Drawing.Size(364, 28);
             this.lblInstruction.TabIndex = 19;
-            this.lblInstruction.Text = "These settings map Gibraltar Sessions to FogBugz areas.\r\nThe rules below apply to" +
+            this.lblInstruction.Text = "These settings map Loupe Sessions to FogBugz areas.\r\nThe rules below apply to" +
                 " all users of your Hub.";
             // 
             // btnRemoveRule
@@ -569,7 +569,7 @@
             this.label10.Size = new System.Drawing.Size(325, 32);
             this.label10.TabIndex = 3;
             this.label10.Text = "To maximize performance, you can restrict the range of cases that are checked for" +
-                " Gibraltar sessions";
+                " Loupe sessions";
             // 
             // CaseStatusList
             // 

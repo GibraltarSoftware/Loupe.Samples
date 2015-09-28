@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Loupe.Extension.FindByUser</id>
+    <version>$version$</version>
+    <title>Find By User</title>
+    <authors>Gibraltar Software</authors>
+    <owners>Gibraltar Software</owners>
+    <iconUrl>http://www.gibraltarsoftware.com/loupe.ico</iconUrl>
+    <licenseUrl>http://www.gibraltarsoftware.com/Support/Documentation.aspx?Page=Reference_GibraltarAgentLicense.html</licenseUrl>
+    <projectUrl>http://www.gibraltarsoftware.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This add-in indexes each session by the associated user names.</description>
+    <summary />
+    <tags>Loupe Logging</tags>
+  </metadata>
+</package>

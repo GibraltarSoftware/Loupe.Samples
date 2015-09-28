@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Sample
 {
     /// <summary>
     /// This session command will only apply to sessions for applications with the product name "Demo"
@@ -26,12 +24,12 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -88,7 +86,7 @@ namespace Gibraltar.AddIn.Test
             switch (commandName)
             {
                 case "DoNothing":
-                    Trace.WriteLine("Don't do anything at all", "Gibraltar.Add In");
+                    Trace.WriteLine("Don't do anything at all", "Loupe.Extension");
                     break;
             }
         }

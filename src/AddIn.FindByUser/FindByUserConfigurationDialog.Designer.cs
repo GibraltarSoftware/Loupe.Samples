@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     partial class FindByUserConfigurationDialog
     {

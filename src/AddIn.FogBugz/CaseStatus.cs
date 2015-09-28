@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gibraltar.AddIn.FogBugz
+﻿namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// The high-level FogBugz Case Status

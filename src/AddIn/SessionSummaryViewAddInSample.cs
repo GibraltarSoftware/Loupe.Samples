@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Sample
 {
     public partial class SessionSummaryViewAddInSample : UserControl, ISessionSummaryView
     {
@@ -81,13 +81,13 @@ namespace Gibraltar.AddIn.Test
         /// <remarks>
         /// If any exception is thrown during this call this view will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             //we don't need any repository access, so we're not going to do anything with it.
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -105,7 +105,7 @@ namespace Gibraltar.AddIn.Test
         }
 
         /// <summary>
-        /// Called by the contaioner to indicate this view is no longer the active summary view.
+        /// Called by the container to indicate this view is no longer the active summary view.
         /// </summary>
         public void DeactivateView()
         {
@@ -285,7 +285,7 @@ namespace Gibraltar.AddIn.Test
         private static bool MatchString(string summaryString, string search)
         {
             //This is a simple way to do our basic search.  By all means, write your own fancy one - 
-            //or use LINQ or Lamda expressions or what have you.
+            //or use LINQ or Lambda expressions or what have you.
             bool matchFound;
 
             string adjustedSearchValue = search.ToUpperInvariant(); //to perform case insensitive searches we have to force case.

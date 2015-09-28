@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extensibility.Server;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// Allows sessions to be scanned and errors reported to FogBugz
     /// </summary>
-    public class SessionAnalysisAddIn : ISessionAnalyzer, ISessionCommand
+    public class SessionAnalyzer : ISessionAnalyzer, ISessionCommand
     {
-        private const string LogCategory = AddInController.LogCategory +  ".Session Analyzer";
+        private const string LogCategory = RepositoryController.LogCategory +  ".Session Analyzer";
 
         private bool m_Initialized;
         private bool m_IsDisposed;
-        private IAddInContext m_Context;
-        private AddInController m_Controller;
+        private IRepositoryContext m_Context;
+        private RepositoryController m_Controller;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -40,13 +42,13 @@ namespace Gibraltar.AddIn.FogBugz
         /// If any exception is thrown during this call this add in will not be loaded.
         ///             The analyzer can keep the context object for its entire lifespan
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             if (m_Initialized)
                 throw new InvalidOperationException("The add-in has already been initialized and shouldn't be re-initialized");
             
             m_Context = context;
-            m_Controller = (AddInController)m_Context.Controller;
+            m_Controller = (RepositoryController)m_Context.RepositoryController;
 
             //load up our baseline configuration
             ConfigurationChanged();
@@ -55,7 +57,7 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -115,7 +117,7 @@ namespace Gibraltar.AddIn.FogBugz
                 case "scan":
                     foreach (ISessionSummary summary in sessionSummaries)
                     {
-                        // Ignore sesssions that do not contain any errors.  Checking the header first saves the time to load the session data
+                        // Ignore sessions that do not contain any errors.  Checking the header first saves the time to load the session data
                         if (summary.ErrorCount == 0)
                         {
                             Log.Verbose(LogCategory, "Skipping session because there are no errors to inspect", null);
@@ -136,13 +138,13 @@ namespace Gibraltar.AddIn.FogBugz
         /// <remarks>
         /// <para>
         /// The FogBugz configuration file is read for each session so that
-        /// changes to the file can be made without having to restart Gibraltar.
+        /// changes to the file can be made without having to restart Loupe.
         /// </para>
         /// </remarks>
         public void Process(ISession session)
         {
             //if we aren't supposed to run on this tier, don't.
-            if (m_Context.Environment == GibraltarEnvironment.HubServer)
+            if (m_Context.Environment == LoupeEnvironment.Server)
             {
                 if (m_Controller.HubConfiguration.EnableAutomaticAnalysis == false)
                 {
@@ -157,7 +159,7 @@ namespace Gibraltar.AddIn.FogBugz
                 }
             }
 
-            // Ignore sesssions that do not contain any errors
+            // Ignore sessions that do not contain any errors
             if (session.ErrorCount == 0)
             {
                 Log.Verbose(LogCategory, "Skipping session because there are no errors to inspect", null);
@@ -187,7 +189,7 @@ namespace Gibraltar.AddIn.FogBugz
             // Process each unique error (as defined in IssuesByClass)
             Dictionary<string, ErrorInfo> errorList = new Dictionary<string, ErrorInfo>();
 
-            foreach (ILogMessage message in session.Messages)
+            foreach (ILogMessage message in session.GetMessages())
             {
                 //process errors
                 if (message.Severity > LogMessageSeverity.Error)
@@ -224,7 +226,7 @@ namespace Gibraltar.AddIn.FogBugz
         /// <param name="session"></param>
         private void ActionProcessSession(ISession session)
         {
-            // Ignore sesssions that do not contain any errors
+            // Ignore sessions that do not contain any errors
             if (session.ErrorCount == 0)
             {
                 Log.Verbose(LogCategory, "Skipping session because there are no errors to inspect", null);
@@ -254,7 +256,7 @@ namespace Gibraltar.AddIn.FogBugz
             // Process each unique error (as defined in IssuesByClass)
             Dictionary<string, ErrorInfo> errorList = new Dictionary<string, ErrorInfo>();
 
-            foreach (ILogMessage message in session.Messages)
+            foreach (ILogMessage message in session.GetMessages())
             {
                 //process errors
                 if (message.Severity > LogMessageSeverity.Error)

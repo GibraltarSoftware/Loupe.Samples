@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extensibility.Server;
 
-namespace Gibraltar.AddIn.FindByUser
+namespace Loupe.Extension.FindByUser
 {
     public class SessionAnalyzer : ISessionAnalyzer, ISessionCommand
-    {     
-        private IRepositoryAddInContext _addInContext;
+    {
+        private IRepositoryContext _addInContext;
 
         private bool _initialized;
         private bool _isDisposed;
@@ -36,7 +37,7 @@ namespace Gibraltar.AddIn.FindByUser
         /// <remarks>
         /// If any exception is thrown during this call the Add In will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             if (_initialized)
                 throw new InvalidOperationException("The add-in has already been initialized and shouldn't be re-initialized");
@@ -46,7 +47,7 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -65,7 +66,7 @@ namespace Gibraltar.AddIn.FindByUser
         }
 
         /// <summary>
-        /// This method is called once for each session the user explicitly requests to be exorted
+        /// This method is called once for each session the user explicitly requests to be exported
         /// </summary>
         private void ScanSession(ISession session)
         {
@@ -115,7 +116,7 @@ namespace Gibraltar.AddIn.FindByUser
         {
             try
             {
-                _addInContext.Log.Verbose(FindByUserAddIn.LogCategory, "Processing " + commandName + " command", null);
+                _addInContext.Log.Verbose(ExtentionDefinition.LogCategory, "Processing " + commandName + " command", null);
                 switch (commandName)
                 {
                     case "scan":
@@ -125,7 +126,7 @@ namespace Gibraltar.AddIn.FindByUser
             }
             catch (Exception ex)
             {
-                _addInContext.Log.Error(ex, FindByUserAddIn.LogCategory, "Unhandled Exception processing " + commandName + " command",
+                _addInContext.Log.Error(ex, ExtentionDefinition.LogCategory, "Unhandled Exception processing " + commandName + " command",
                     "Called with {0} sessions", sessionSummaries.Count);
                 throw;
             }
@@ -153,7 +154,7 @@ namespace Gibraltar.AddIn.FindByUser
                 if (missingSessionCount > 0 && _addInContext.IsUserInterfaceSupported)
                 {
                     var msg = string.Format(
-                        "{0} of the {1} sessions you selected are not availale. "
+                        "{0} of the {1} sessions you selected are not available. "
                         + "This is typically because they have not yet been downloaded.\r\n\r\n"
                         + "Continue anyway?", missingSessionCount, sessionSummaries.Count);
 
@@ -185,13 +186,13 @@ namespace Gibraltar.AddIn.FindByUser
                 }
 
                 if (localSession > 0)
-                    _addInContext.Log.Warning(FindByUserAddIn.LogCategory, "AddIns are not compatible with local sessions",
+                    _addInContext.Log.Warning(ExtentionDefinition.LogCategory, "AddIns are not compatible with local sessions",
                         "This will be corrected in a future version of Loupe Desktop.");
 
                 var description = string.Format("{0} sessions scanned.", sessionSummaries.Count);
                 if (missingSessions > 0)
                     description += string.Format("\n{0} were not available", missingSessions);
-                _addInContext.Log.Information(FindByUserAddIn.LogCategory, "Find By User scanning complete", description);
+                _addInContext.Log.Information(ExtentionDefinition.LogCategory, "Find By User scanning complete", description);
             }
         }
     }
