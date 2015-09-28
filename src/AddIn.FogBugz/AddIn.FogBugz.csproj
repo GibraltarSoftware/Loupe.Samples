@@ -59,7 +59,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Loupe.Extensibility.3.8.1.2692\lib\net20\Loupe.Extensibility.dll</HintPath>
+      <HintPath>..\..\packages\Loupe.Extensibility.4.0.0.3015\lib\net20\Loupe.Extensibility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Internal\FogBugzCaseInfo.cs" />
     <Compile Include="Internal\FogBugzCaseList.cs" />
-    <None Include="app.config" />
     <None Include="Loupe.Extension.FogBugz.nuspec" />
     <None Include="Internal\FogBugzFilter.cs">
       <SubType>Form</SubType>
