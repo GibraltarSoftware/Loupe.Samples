@@ -8,8 +8,8 @@
     <ProjectGuid>{7834B04E-C669-4DB1-8931-011B1BB61FBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gibraltar.AddIn.FogBugz</RootNamespace>
-    <AssemblyName>Gibraltar.AddIn.FogBugz</AssemblyName>
+    <RootNamespace>Loupe.Extension.FogBugz</RootNamespace>
+    <AssemblyName>Loupe.Extension.FogBugz</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -58,12 +58,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gibraltar.AddIn">
-      <HintPath>..\..\packages\Gibraltar.AddIn.3.7.0.2102\lib\4.0\Gibraltar.AddIn.dll</HintPath>
-    </Reference>
-    <Reference Include="Gibraltar.Agent, Version=3.7.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Gibraltar.Agent.3.7.0.2102\lib\4.0\Gibraltar.Agent.dll</HintPath>
+    <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Loupe.Extensibility.4.0.0.3015\lib\net20\Loupe.Extensibility.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -73,8 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddInCommand.cs" />
-    <Compile Include="AddInController.cs" />
+    <Compile Include="RepositoryCommand.cs" />
+    <Compile Include="RepositoryController.cs" />
+    <Compile Include="ExtensionDefinition.cs" />
     <Compile Include="CaseStatus.cs" />
     <Compile Include="ConfigurationEditor.cs">
       <SubType>Form</SubType>
@@ -82,7 +80,7 @@
     <Compile Include="ConfigurationEditor.Designer.cs">
       <DependentUpon>ConfigurationEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="HubConfig.cs" />
+    <Compile Include="ServerConfig.cs" />
     <Compile Include="Internal\AddDefectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,7 +96,7 @@
     </Compile>
     <Compile Include="Internal\FogBugzCaseInfo.cs" />
     <Compile Include="Internal\FogBugzCaseList.cs" />
-    <None Include="app.config" />
+    <None Include="Loupe.Extension.FogBugz.nuspec" />
     <None Include="Internal\FogBugzFilter.cs">
       <SubType>Form</SubType>
     </None>
@@ -125,7 +123,7 @@
     <Compile Include="MappingList.cs" />
     <Compile Include="Internal\FBApi.cs" />
     <Compile Include="Internal\FogBugzCaseWriter.cs" />
-    <Compile Include="SessionAnalysisAddIn.cs" />
+    <Compile Include="SessionAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\ErrorInfo.cs" />
     <Compile Include="UserConfig.cs" />
@@ -170,6 +168,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release $(ProjectDir)..\..\Tools\NuGet.exe Pack $(ProjectPath) -Prop Configuration=Release</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

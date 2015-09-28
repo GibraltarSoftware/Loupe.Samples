@@ -1,7 +1,7 @@
 ﻿using System;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Export
+namespace Loupe.Extension.Export
 {
     /// <summary>
     /// Configuration data for the Session Export add-in

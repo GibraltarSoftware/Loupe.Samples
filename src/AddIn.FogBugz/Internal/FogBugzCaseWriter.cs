@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// This class encapsulates the details of creating or updating a case in FogBugz
@@ -12,7 +12,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
     /// </summary>
     internal class FogBugzCaseWriter
     {
-        private const string LogCategory = AddInController.LogCategory +  ".Case Writer";
+        private const string LogCategory = RepositoryController.LogCategory +  ".Case Writer";
 
         public ErrorInfo Error { get; private set; }
         public ILogMessage FirstMessage { get { return Error.Messages[0]; } }
@@ -120,7 +120,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
                 // a detailed description.
                 updateArgs.Add("sVersion", Session.Summary.ApplicationVersion.ToString());
                 updateArgs.Add("sEvent", formatter.GetRecurrenceLaterVersionEvent(Error));
-                Log.Verbose(LogCategory, "Updating latest version information on existing issue", "This new instance has a higher version number than any previous occurence so we'll update the high water mark on the server.\r\nPrevious Version: {0}\r\nThis Version: {1}", previousVersion, Session.Summary.ApplicationVersion);
+                Log.Verbose(LogCategory, "Updating latest version information on existing issue", "This new instance has a higher version number than any previous occurrence so we'll update the high water mark on the server.\r\nPrevious Version: {0}\r\nThis Version: {1}", previousVersion, Session.Summary.ApplicationVersion);
             }
             else if (Session.Summary.ApplicationVersion == previousVersion)
             {

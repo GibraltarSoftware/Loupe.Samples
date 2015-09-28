@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// Helper class for comparing version numbers

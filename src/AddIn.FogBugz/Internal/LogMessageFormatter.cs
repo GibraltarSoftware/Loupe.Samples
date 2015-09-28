@@ -1,14 +1,14 @@
 ﻿using System.Text;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FogBugz.Internal
+namespace Loupe.Extension.FogBugz.Internal
 {
     /// <summary>
     /// This class is all about text formatting the error info to be written to FogBugz.
     /// </summary>
     internal class LogMessageFormatter
     {
-        public const string SessionIdPrefix = "Gibraltar Session Id: ";
+        public const string SessionIdPrefix = "Loupe Session Id: ";
         public ILogMessage Message { get; private set; }
         public string SessionId { get { return Message.Session.Id.ToString("N"); } }
 
@@ -30,7 +30,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
             builder.Append(GetSessionDetails());
             if (error.Messages.Count > 1)
             {
-                builder.AppendFormat("\r\nDetails below are for the first of {0} occurences in this session:\r\n\r\n",
+                builder.AppendFormat("\r\nDetails below are for the first of {0} occurrences in this session:\r\n\r\n",
                                      error.Messages.Count);
             }
 
@@ -54,7 +54,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
             builder.AppendLine();
             if (error.Messages.Count > 1)
             {
-                builder.AppendFormat("Details below are for the first of {0} occurences in this session:\r\n:",
+                builder.AppendFormat("Details below are for the first of {0} occurrences in this session:\r\n:",
                                      error.Messages.Count);
             }
 
@@ -70,13 +70,13 @@ namespace Gibraltar.AddIn.FogBugz.Internal
 
             ILogMessage message = error.Messages[0];
             if (error.Messages.Count > 1)
-                builder.AppendFormat("Another {0} {1} occurences starting at {2} {3}\r\n",
+                builder.AppendFormat("Another {0} {1} occurrences starting at {2} {3}\r\n",
                                  error.Messages.Count,
                                  message.Severity,
                                  message.Timestamp.ToString("d"),
                                  message.Timestamp.ToString("T"));
             else
-                builder.AppendFormat("Another {0} occurence starting at {1} {2}\r\n",
+                builder.AppendFormat("Another {0} occurrence starting at {1} {2}\r\n",
                                  message.Severity,
                                  message.Timestamp.ToString("d"),
                                  message.Timestamp.ToString("T"));
@@ -272,7 +272,7 @@ namespace Gibraltar.AddIn.FogBugz.Internal
                                  session.Summary.OSArchitecture,
                                  session.Summary.RuntimeArchitecture);
 
-            builder.AppendFormat("Framework:        .NET: v{0}   Gibraltar Agent v{1}\r\n",
+            builder.AppendFormat("Framework:        .NET: v{0}   Loupe Agent v{1}\r\n",
                                  session.Summary.RuntimeVersion,
                                  session.Summary.AgentVersion);
 

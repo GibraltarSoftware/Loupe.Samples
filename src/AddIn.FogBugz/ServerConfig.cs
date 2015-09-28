@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// Configuration specific to FogBugz Hub integration
     /// </summary>
     [XmlRoot("fogBugzHubConfig")]
-    public class HubConfig
+    public class ServerConfig
     {
         /// <summary>
         /// Indicates of the hub should perform automatic session analysis or not

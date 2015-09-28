@@ -7,8 +7,8 @@
     <ProjectGuid>{6724697A-49DC-4505-85A6-30FE112DB5C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gibraltar.AddIn.FindByUser</RootNamespace>
-    <AssemblyName>Gibraltar.AddIn.FindByUser</AssemblyName>
+    <RootNamespace>Loupe.Extension.FindByUser</RootNamespace>
+    <AssemblyName>Loupe.Extension.FindByUser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gibraltar.AddIn, Version=3.5.4.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Gibraltar.AddIn.3.7.0.2102\lib\4.0\Gibraltar.AddIn.dll</HintPath>
+    <Reference Include="Loupe.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Loupe.Extensibility.4.0.0.3015\lib\net20\Loupe.Extensibility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindByUserAddIn.cs" />
+    <Compile Include="ExtentionDefinition.cs" />
     <Compile Include="FindByUserConfigurationDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +71,8 @@
     <Compile Include="SessionAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FindByUser.vdb4" />
+    <None Include="Loupe.Extension.FindByUser.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
@@ -92,7 +94,13 @@
   <ItemGroup>
     <None Include="Resources\UserIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="FindByUser.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release $(ProjectDir)..\..\Tools\NuGet.exe Pack $(ProjectPath) -Prop Configuration=Release</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

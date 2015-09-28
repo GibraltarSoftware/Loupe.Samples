@@ -1,11 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Xml.Serialization;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
     /// FogBugzConfig is the serializable configuration data that is read & written to a file

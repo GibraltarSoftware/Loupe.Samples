@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Data;
 
-namespace Gibraltar.AddIn.Test
+namespace Loupe.Extension.Sample
 {
     public partial class AddDefectDialog : Form
     {

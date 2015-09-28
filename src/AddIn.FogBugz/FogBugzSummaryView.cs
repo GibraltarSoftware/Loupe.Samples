@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Web;
 using System.Windows.Forms;
-using Gibraltar.AddIn.FogBugz.Internal;
-using Gibraltar.Analyst.AddIn;
-using Gibraltar.Analyst.Data;
+using Loupe.Extensibility.Client;
+using Loupe.Extensibility.Data;
+using Loupe.Extension.FogBugz.Internal;
 
-namespace Gibraltar.AddIn.FogBugz
+namespace Loupe.Extension.FogBugz
 {
     /// <summary>
-    /// This viewer shows a list of FogBugz cases that are related to Gibraltar sessions.
+    /// This viewer shows a list of FogBugz cases that are related to Loupe sessions.
     /// </summary>
     public partial class FogBugzSummaryView : UserControl, ISessionSummaryView
     {
         private const string DefaultTitle = "FogBugz Cases with Sessions";
         private readonly object m_Lock = new object();
 
-        private IRepositoryAddInContext m_Context;
-        private AddInController m_Controller;
+        private IRepositoryContext m_Context;
+        private RepositoryController m_Controller;
         private ISessionSummaryCollection m_SessionSummaries;
         private Dictionary<Guid, ISessionSummary> m_SessionIds; //all of the ids of the sessions in session summaries, indexed.
         private List<ISessionSummary> m_SelectedItems;
@@ -87,10 +86,10 @@ namespace Gibraltar.AddIn.FogBugz
         /// <remarks>
         /// If any exception is thrown during this call this view will not be loaded.
         /// </remarks>
-        public void Initialize(IRepositoryAddInContext context)
+        public void Initialize(IRepositoryContext context)
         {
             m_Context = context;
-            m_Controller = (AddInController)context.Controller;
+            m_Controller = (RepositoryController)context.RepositoryController;
             m_Initialized = true;
             SetDisplayCase(null);
             ThreadSafeDisplayCaseList();
@@ -98,7 +97,7 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Called by Gibraltar to indicate the configuration of the add in has changed at runtime
+        /// Called by Loupe to indicate the configuration of the add in has changed at runtime
         /// </summary>
         public void ConfigurationChanged()
         {
@@ -118,7 +117,7 @@ namespace Gibraltar.AddIn.FogBugz
         }
 
         /// <summary>
-        /// Called by the contaioner to indicate this view is no longer the active summary view.
+        /// Called by the container to indicate this view is no longer the active summary view.
         /// </summary>
         public void DeactivateView()
         {
@@ -206,7 +205,7 @@ namespace Gibraltar.AddIn.FogBugz
         /// <param name="state">The filter</param>
         private void AsyncPerformSearch(object state)
         {
-            //because we're running from the threadpool we have to catch exceptions because they'd be fatal to the app
+            //because we're running from the thread pool we have to catch exceptions because they'd be fatal to the app
             try
             {
                 string filter = (string)state;
@@ -233,7 +232,7 @@ namespace Gibraltar.AddIn.FogBugz
             }
             catch(Exception ex)
             {
-                m_Context.Log.ReportException(ex, AddInController.LogCategory, true, false);
+                m_Context.Log.ReportException(ex, RepositoryController.LogCategory, true, false);
             }
         }
 

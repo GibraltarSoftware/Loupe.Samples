@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Loupe.Extension.Sample</id>
+    <version>$version$</version>
+    <title>Sample Extension</title>
+    <authors>Gibraltar Software</authors>
+    <owners>Gibraltar Software</owners>
+    <iconUrl>http://www.gibraltarsoftware.com/loupe.ico</iconUrl>
+    <licenseUrl>http://www.gibraltarsoftware.com/Support/Documentation.aspx?Page=Reference_GibraltarAgentLicense.html</licenseUrl>
+    <projectUrl>http://www.gibraltarsoftware.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is a sample extension used to demonstrate basic extension development</description>
+    <summary />
+    <tags>Loupe Logging</tags>
+  </metadata>
+</package>

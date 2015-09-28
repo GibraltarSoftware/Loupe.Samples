@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Loupe.Extension.Export</id>
+    <version>$version$</version>
+    <title>Export Sessions</title>
+    <authors>Gibraltar Software</authors>
+    <owners>Gibraltar Software</owners>
+    <iconUrl>http://www.gibraltarsoftware.com/loupe.ico</iconUrl>
+    <licenseUrl>http://www.gibraltarsoftware.com/Support/Documentation.aspx?Page=Reference_GibraltarAgentLicense.html</licenseUrl>
+    <projectUrl>http://www.gibraltarsoftware.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This add-in exports Loupe session data to text files. It is most useful in combination with other programs such as 
+    Excel or Splunk that allow analysis of log data. You specify which metrics you are interested in from which applications and 
+    this add-in will create text files for each specified metric</description>
+    <summary />
+    <tags>Loupe Logging</tags>
+  </metadata>
+</package>
