@@ -1,32 +1,26 @@
-Session Export AddIn for Gibraltar Loupe
+Session Export Extension for Gibraltar Loupe
 ========================================
 
 Loupe collects a wealth of information in an extremely compact binary format. This add-in
 gives you a way of exporting log messages and metrics from Loupe to text files that can
 be easily parsed by other programs such as Excel or Splunk. 
 
-Using this Add-In
+Using this Extension
 ---------------
 
-After building this project, copy the Gibraltar.AddIn.Export.dll to the public data folder
-associated with Loupe Desktop and Loupe Server. Typically, this folder is located here:
+After building this project, register the Extension NuGet Package with the Loupe Server.  To
+do this, you'll need to use the Loupe Server Administrator.  For more information on deploying
+extensions, see:
 
-    C:\ProgramData\Gibraltar\Add In
-
-To enable the add-in restart Loupe Desktop then go to the backstage area and enable the add-in.
-This will prompt you to select a folder into which exported files will be stored.  If you are
-using Loupe Server, you'll want to configure a path that is legal both on your local Loupe Desktop
-and also on your Loupe Server.  By default, exported log files will be stored here:
-
-    C:\Loupe Exports
+[Loupe Extension Deployment](http://www.gibraltarsoftware.com/Support/Loupe/Documentation/WebFrame.html#AddIn_Deployment.html)
 
 
 Implementation Notes
 --------------------
 
-This add-in is compiled for .NET 4.0 but is compatible with both .NET 4.0 and .NET 4.5.
+This extension is compiled for .NET 4.0 but is compatible with both .NET 4.0 and .NET 4.5.
 
-Building the Add-In
+Building the Extension
 -------------------
 
 This project is designed for use with Visual Studio 2012 with NuGet package restore enabled.

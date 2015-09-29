@@ -1,15 +1,7 @@
 Loupe.Samples
 =============
 
-Code samples for Loupe - including Agent usage and Add In development
-
-AddIn.FindByUser
-----------------
-This add-in indexes all the users associated with each log session so that you
-can quickly find the logs associated with a particular user. The indexed data can
-be stored in either a VistaDB or SQL Server database.
-
-Full details are provided in a README.md file associated with the AddIn.FindByUser project.
+Code samples for Loupe - including Agent usage and Extension development
 
 AddIn.Export
 ------------
@@ -21,6 +13,17 @@ to the repository.  This latter usage is great for integrating Loupe with other
 log analysis software such as Loggly, Splunk, PaperTrail and LogStash.
 
 Note that the AddIn.Export project provides a more detailed README.md file.
+
+AddIn.FindByUser
+----------------
+*Note*: this extension duplicates functionality built into Loupe 4.0 and is provided
+as an example of how to implement similar functionality only.
+
+This extension indexes all the users associated with each log session so that you
+can quickly find the logs associated with a particular user.  The indexed data can
+be stored in either a VistaDB or SQL Server database.  
+
+Full details are provided in a README.md file associated with the AddIn.FindByUser project.
 
 Caliper
 --------

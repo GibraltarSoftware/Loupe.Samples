@@ -1,36 +1,29 @@
-Find By User AddIn for Gibraltar Loupe
+Find By User Extension for Gibraltar Loupe
 ======================================
 
-This add-in indexes the users associated with each log session. A Session Summary View control
+This extension indexes the users associated with each log session. A Session Summary View control
 allows Loupe Desktop to quickly identify the log sessions associated with a user on any day. 
 
-Using this Add-In
+Using this Extension
 ---------------
 
-After building this project, copy the Gibraltar.AddIn.FindByUser.dll to the public data folder
-associated with Loupe Desktop and Loupe Server. Typically, this folder is located here:
+After building this project, register the Extension NuGet Package with the Loupe Server.  To
+do this, you'll need to use the Loupe Server Administrator.  For more information on deploying
+extensions, see:
 
-    C:\ProgramData\Gibraltar\Add In
+[Loupe Extension Deployment](http://www.gibraltarsoftware.com/Support/Loupe/Documentation/WebFrame.html#AddIn_Deployment.html)
 
 If you wish to use VistaDB as the data store for indexed data, copy FindByUser.vdb4 to this 
 directory as well.  Alternately, you can run the FindByUser.sql script to initialize a
 SQL Server database with the necessary schema.
 
-To enable the add-in, restart Loupe Desktop then go to the backstage area and enable the add-in.
-Configure the add-in to reference your data store then restart Loupe Desktop.
+To enable the extension, start Loupe Server Administrator then go to the backstage area and enable the extension.
+Configure the extension to reference your data store then restart Loupe Server.
 
 Once you have restarted Loupe, sessions can be indexed for in three ways:
 
-1. Automatic Indexing by Loupe Desktop
-2. Automatic Indexing by Loupe Server
-3. Manual Indexing by Loupe Desktop
-
-**Automatic Indexing by Loupe Desktop**
-
-If you configured the add-in to "Scan sessions automatically", then sessions will be indexeds
-whenever you download them to Loupe Desktop. Note that, by default, Loupe Desktop only downloads
-session summaries, not full logs.  If you want logs to by automatically indexed, you might also
-wish to configure Loupe Desktop to auomatically download sessions.
+1. Automatic Indexing by Loupe Server
+2. Manual Indexing by Loupe Desktop
 
 **Automatic Indexing by Loupe Server**
 
@@ -52,7 +45,7 @@ This add-in is compiled for .NET 4.0 but is compatible with both .NET 4.0 and .N
 By default, this add-in retains 30 days of index data.  If you wish to change the data retention period, 
 update DataRetentionDays in SessionFilterView.cs.
 
-Building the Add-In
+Building the Extension
 -------------------
 
 This project is designed for use with Visual Studio 2012 with NuGet package restore enabled.
