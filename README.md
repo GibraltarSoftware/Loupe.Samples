@@ -1,10 +1,8 @@
-Loupe.Samples
-=============
+# Loupe.Samples #
 
 Code samples for Loupe - including Agent usage and Extension development
 
-AddIn.Export
-------------
+## AddIn.Export ##
 This add-in allows you to export Loupe log messages and/or metrics as text files.
 
 Files can be exported on-demand from Loupe Desktop using right-click context menus
@@ -14,8 +12,8 @@ log analysis software such as Loggly, Splunk, PaperTrail and LogStash.
 
 Note that the AddIn.Export project provides a more detailed README.md file.
 
-AddIn.FindByUser
-----------------
+## AddIn.FindByUser ##
+
 *Note*: this extension duplicates functionality built into Loupe 4.0 and is provided
 as an example of how to implement similar functionality only.
 
@@ -25,8 +23,8 @@ be stored in either a VistaDB or SQL Server database.
 
 Full details are provided in a README.md file associated with the AddIn.FindByUser project.
 
-Caliper
---------
+## Caliper ##
+
 Caliper is a handy little class you can use to easily add Loupe metrics to your code.
 
 Here's how easy it is to measure the duration of a block of code:
@@ -55,3 +53,8 @@ or you could measure an asynchronous process like this:
     }
 ```
 
+## Loupe.Export ##
+
+This is a command line utility that does a simplified version of what the Export Extension does.
+Call it to dump the log messages from a single Loupe log file (.glf) into a text file.  Use -help
+to get a list of all command options.
