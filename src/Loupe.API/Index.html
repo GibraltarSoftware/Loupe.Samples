@@ -57,32 +57,34 @@
                 <label>
                     User name or email: <input id="searchUserSessions" />
                 </label>
-                <table id="userSessions">
+                <table>
                     <thead>
-                        <tr>
-                            <td>Application</td>
-                            <td>Started On</td>
-                            <td>Ended On</td>
-                            <td>Critical</td>
-                            <td>Error</td>
-                            <td>Warning</td>
-                            <td>Total</td>
-                        </tr>
+                    <tr>
+                        <td>Application</td>
+                        <td>Started On</td>
+                        <td>Ended On</td>
+                        <td>Critical</td>
+                        <td>Error</td>
+                        <td>Warning</td>
+                        <td>Total</td>
+                    </tr>
                     </thead>
+                    <tbody id="userSessions"></tbody>
                 </table>
             </div>
             <div id="appsContainer" class="tab-content">
                 <label>
                     User name or email: <input id="searchUserApps" />
                 </label>
-                <table id="userApps">
+                <table>
                     <thead>
-                        <tr>
-                            <td>Application</td>
-                            <td>Version</td>
-                            <td>Last Accessed On</td>
-                        </tr>
+                    <tr>
+                        <td>Application</td>
+                        <td>Version</td>
+                        <td>Last Accessed On</td>
+                    </tr>
                     </thead>
+                    <tbody id="userApps"></tbody>
                 </table>
             </div>
             <div id="versContainer" class="tab-content">
