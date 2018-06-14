@@ -55,3 +55,9 @@ or you could measure an asynchronous process like this:
     }
 ```
 
+Loupe API
+---------
+A sample HTML and jQuery project that shows how to call the Loupe API.
+
+The project includes examples of logging on and off, fetching and
+updating data, searching for users and sessions, and remove accounts.
