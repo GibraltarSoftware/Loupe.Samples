@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Loupe API Login</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="index.js"></script>
+    <script src="VersionNumber.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+<body>
+    <form id="form">
+        <div class="pull-right">
+            <label>Loupe Base Url: <input id="baseUrl" required /></label>
+            <span>Eg: http://loupe.gibraltarsoftware.com/</span>
+        </div>
+
+        <h1>Step 1. Login to Loupe</h1>
+
+        <label>
+            Username: <input id="username" />
+        </label>
+        <label>
+            Password: <input id="password" type="password" />
+        </label>
+        <input type="submit" id="login" value="Login" />
+        <div id="invalid" class="hidden">The username or password were invalid. Please try again.</div>
+    </form>
+
+    <div id="loggedIn" class="hidden">
+        <div class="pull-right">
+            <input type="button" id="remove" value="Remove Account"/>
+        </div>
+
+        <h1>Step 2. Select Tenant and Application</h1>
+        <div class="cols">
+            <div>
+                <h2>Tenants</h2>
+                <ul id="tenants"></ul>
+            </div>
+            <div id="applicationsContainer" class="hidden">
+                <h2>Applications</h2>
+                <ul id="applications"></ul>
+            </div>
+        </div>
+
+        <div id="tabsContainer" class="hidden">
+            <h1>Step 3. Select Action</h1>
+            <ul class="tabs">
+                <li id="sessions">Sessions for User</li>
+                <li id="apps">Applications for User</li>
+                <li id="vers">Application Versions</li>
+            </ul>
+            <div id="sessionsContainer" class="tab-content">
+                <label>
+                    User name or email: <input id="searchUserSessions" />
+                </label>
+                <table id="userSessions">
+                    <thead>
+                        <tr>
+                            <td>Application</td>
+                            <td>Started On</td>
+                            <td>Ended On</td>
+                            <td>Critical</td>
+                            <td>Error</td>
+                            <td>Warning</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="appsContainer" class="tab-content">
+                <label>
+                    User name or email: <input id="searchUserApps" />
+                </label>
+                <table id="userApps">
+                    <thead>
+                        <tr>
+                            <td>Application</td>
+                            <td>Version</td>
+                            <td>Last Accessed On</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="versContainer" class="tab-content">
+                <input type="button" id="getApplicationVersions" value="Get Application Versions" />
+                <div id="versionsContainer" class="hidden">
+                    <h1>Versions</h1>
+                    <ul id="applicationVersions"></ul>
+                    <div><input type="button" id="newApplicationVersion" value="New Version" /></div>
+                </div>
+                <div id="applicationVersion" class="hidden">
+                    <h1>Application Version</h1>
+                    <label>
+                        Display Version <input id="displayVersion" />
+                    </label>
+                    <label>
+                        Caption <input id="caption" />
+                    </label>
+                    <label>
+                        Description <textarea id="description"></textarea>
+                    </label>
+                    <label>
+                        Release Date: <input id="releasedDate" />
+                    </label>
+                    <label>
+                        Release Type: <select id="releaseType"></select>
+                    </label>
+                    <label>
+                        Release Notes Url: <input id="releaseNotesUrl" />
+                    </label>
+                    <label>
+                        Promotion Level: <select id="promotionLevel"></select>
+                    </label>
+                    <input type="button" id="saveVersion" value="Save" />
+                    <span id="savedMessage"></span>
+                    <ul id="saveErrors"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="removeContainer" class="hidden">
+            <p>Account removal will completely remove the account you are currently logged into.</p>
+            <p>
+                If you remove your account, you will no longer have access to your Loupe service,
+                nor will you receive Loupe Notifications.
+            </p>
+            <input id="removeAccount" type="button" value="Remove Account"/>
+            <div id="actualRemove" class="hidden">
+                Are you sure you wish to remove your account?
+                <input id="removeAccountYes" type="button" value="Yes" title="Yes, remove my account" />
+                <input id="removeAccountNo"  type="button" value="No" title="No, do not remove my account" />
+                <div id="NotImplemented" class="hidden">
+                    Account removal is not yet implemented on the Loupe platform.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
