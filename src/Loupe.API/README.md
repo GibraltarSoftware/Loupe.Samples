@@ -10,7 +10,7 @@ header.
 
 For example:
 ```javascript
-var baseUrl = 'https://loupe.gibraltarsoftware.com/';
+var baseUrl = 'https://us.onloupe.com/';
 var username = 'your username',
 	password = 'your password',
 	accessToken;
