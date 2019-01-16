@@ -24,8 +24,15 @@ li.selected {
     flex-direction: row;
 }
 
+.pull-left {
+    float: left;
+}
 .pull-right {
     float: right;
+}
+
+.space-left {
+    margin-left: 40px;
 }
 
 ul.tabs {
