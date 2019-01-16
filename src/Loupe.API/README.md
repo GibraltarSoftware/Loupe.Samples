@@ -141,7 +141,7 @@ The details returned is a list of `ProductApplicationCaptionModel` objects conta
 The latter of these is useful for display, since Loupe eliminates duplicate text 
 when the application includes the product name.
 
-The **productName** and **applicationName** should be used in all reuests that
+The **productName** and **applicationName** should be used in all requests that
 relate to a specific application.
 
 # Use Cases for the Loupe API
@@ -327,7 +327,6 @@ action. For example:
 
 ```javascript
 var settings = {
-var settings = {
 	url: baseUrl + 'Customers/' + tenantName + '/api/ApplicationVersion/POST/',
 	method: 'POST',
 	data: updatedVersionDetails,
@@ -349,6 +348,70 @@ Creating a new version requires the reference data (release types and promotion 
 you can obtain a blank version by calling `GetNew`. This returns the same details as `Get`,
 but sets the `Id` to Guid.Empty and uses the current application (in the header) to 
 set the `ApplicationId`. 
+
+### Issues for an Application Version
+If you are raising and resolving issues in applications, you may need to obtain a list of issues
+within a particular application version. There are two API calls for this, one that obtains open issues
+and one that obtains closed issues. For example, the following shows how to obtain open issues
+for an application version:
+
+```javascript
+var url = 'Customers/' + currentTenant + '/api/Issues/OpenForApplication' +
+    '?applicationVersionId=' + currentVersion.id + 
+    '&take=0&skip=0' + 
+    '&page=1&pageSize=10';
+var settings = {
+	url: baseUrl + url,
+	method: 'GET',
+	headers: {
+		'Authorization': 'Session ' + accessToken
+	}
+};
+$.ajax(settings)
+	.done(function (response) {
+		var issues = response.data;
+	});
+```
+
+>> Note that the 'take' and 'skip' parameters are ignored and are only included for legacy reasons.
+
+>> To fetch the closed issues, use the `ClosedForApplication` endpoint.
+
+The returned data is a list of issues, each containing:
+
+* **adddedBy**. Details of who added the user:
+  * **email**. The user's email details:
+    * **address**. The email address
+	* **hash**. The email hash, for gravatar use
+  * **id**. The user id
+  * **title**. The display title of the user
+  * **url**. The client URL used to view the user
+* **addedOn**. The date and time the issue was added
+* **applicationName**. The name of the application associated with the issue
+* **assignedTo**. Details of the user the issue is assigned to (in the same format as addedBy)
+* **caption**. Details of the issue caption:
+  * **id**. The unique id of the issue
+  * **isSuppressed**. Indicates whether or not the issue is suppressed
+  * **status**. Descriptive status of the issue (eg Active)
+  * **title**. Full title of the issue
+  * **url**. The client URL used to display the issue
+* **endpoints**. The number of computers this issue affects
+* **fixedInVersion**. Details of the version this is fixed in (if the issue is resolved):
+  * **bin**. Binary version number
+  * **id**. Unique ID of the application version
+  * **title**. Version number caption.
+  * **url**. The client URL used to view the application version
+  * **version**. The actual version number
+* **id**. The ID of the issue.
+* **lastOccurredOn**. The date and time the issue last occurred
+* **occurrences**. The number of event occurrences of the issue
+* **productName**. The name of the product associated with the issue
+* **selectable**. For UI use only, indicating if the issue is selectable
+* **sessions**. The number of sessions within which the issuee occurred
+* **status**. Descriptive status of the issue (eg Active)
+* **updatedBy**. Details of the user that updated the issue (in the same format as addedBy)
+* **updatedOn**. The date and time the issue was updated
+* **users**. The number of users affected by this issue
 
 ## Removing a User Account
 The main administration area of Loupe allows for accounts to be deactivated, they are not actually
