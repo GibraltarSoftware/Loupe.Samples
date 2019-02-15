@@ -52,6 +52,7 @@
                 <li id="sessions">Sessions for User</li>
                 <li id="apps">Applications for User</li>
                 <li id="vers">Application Versions</li>
+                <li id="issues">Issues</li>
             </ul>
             <div id="sessionsContainer" class="tab-content">
                 <label>
@@ -127,6 +128,12 @@
                         <ul id="openIssues"></ul>
                     </div>
                 </div>
+            </div>
+            <div id="issuesContainer" class="tab-content">
+                <label for="appVersionWildcard">Enter version (wildcards supported. Eg 3.2.*)</label>
+                <input id="appVersionWildcard" />
+                <input type="button" id="getIssuesWildcard" value="Get Versions and Issues"/>
+                <ul id="versionIssues"></ul>
             </div>
         </div>
         

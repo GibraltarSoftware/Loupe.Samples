@@ -57,6 +57,7 @@
         $('#searchUserApps').blur(searchUserApps);
         $('#remove').click(removeAccount);
         $('#getOpenIssues').click(getOpenIssues);
+        $('#getIssuesWildcard').click(getIssuesWildcard);
         removeContainer = $('#removeContainer');
     });
 
@@ -401,6 +402,31 @@
                     $('<li/>')
                         .text(issue.caption.title)
                         .appendTo(openIssues);
+                });
+        });
+    }
+
+    function getIssuesWildcard() {
+        var versionString = $('#appVersionWildcard').val();
+        var settings = callSettings('Customers/' + currentTenant + '/api/Issues/ForVersion/' +
+            '?versionSpecifier=' + versionString +
+            '&page=1&pageSize=10');
+
+        var versionIssues = $('#versionIssues');
+        $.ajax(settings).done(function(response) {
+            versionIssues.empty();
+            $.each(response,
+                function (idx, version) {
+                    var issues = $('<ul/>');
+                    $.each(version.issues, function (idx, issue) {
+                        $('<li/>')
+                            .text(issue.caption.title)
+                            .appendTo(issues);
+                    });
+                    var versionElement = $('<li/>')
+                        .text(version.version.title)
+                        .appendTo(versionIssues);
+                    issues.appendTo(versionElement);
                 });
         });
     }
