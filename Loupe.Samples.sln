@@ -1,5 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceMonitorDynamicBindingSample", "src\TraceMonitorDynamicBindingSample\TraceMonitorDynamicBindingSample.csproj", "{BDB284BF-D0C3-4F82-B08D-C5A752AD8603}"
@@ -28,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddIn.FindByUser", "src\AddIn.FindByUser\AddIn.FindByUser.csproj", "{6724697A-49DC-4505-85A6-30FE112DB5C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loupe.Export", "src\Loupe.Export\Loupe.Export.csproj", "{96711976-A49F-4EDF-856C-F835A4633D23}"
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Loupe.API(1)", "src\Loupe.API\", "{1B12E20F-B4D4-4690-B08E-166816FD111C}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
@@ -88,6 +90,10 @@ Global
 		{6724697A-49DC-4505-85A6-30FE112DB5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6724697A-49DC-4505-85A6-30FE112DB5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6724697A-49DC-4505-85A6-30FE112DB5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96711976-A49F-4EDF-856C-F835A4633D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96711976-A49F-4EDF-856C-F835A4633D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96711976-A49F-4EDF-856C-F835A4633D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96711976-A49F-4EDF-856C-F835A4633D23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B12E20F-B4D4-4690-B08E-166816FD111C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B12E20F-B4D4-4690-B08E-166816FD111C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B12E20F-B4D4-4690-B08E-166816FD111C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -97,6 +103,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCA325D2-0C05-4813-9656-83CC350AAFAF}
 		SolutionGuid = {BFFEECEA-3303-4F69-85BC-F098804219DD}
 	EndGlobalSection
 EndGlobal
