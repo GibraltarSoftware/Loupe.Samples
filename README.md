@@ -53,8 +53,17 @@ or you could measure an asynchronous process like this:
     }
 ```
 
+<<<<<<< HEAD
 ## Loupe.Export ##
 
 This is a command line utility that does a simplified version of what the Export Extension does.
 Call it to dump the log messages from a single Loupe log file (.glf) into a text file.  Use -help
 to get a list of all command options.
+=======
+Loupe API
+---------
+A sample HTML and jQuery project that shows how to call the Loupe API.
+
+The project includes examples of logging on and off, fetching and
+updating data, searching for users and sessions, and remove accounts.
+>>>>>>> master
