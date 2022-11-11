@@ -16,9 +16,9 @@ namespace ConsoleAPI
 {
     static class Program
     {
-        static readonly string BaseAddress = "http://localhost:58080/";
-        static readonly string UserName = "dave@gibraltarsoftware.com";
-        static readonly string Password = "TheRedLion";
+        static readonly string BaseAddress = "https://loupe-test.onloupe.com/";     // your Loupe URL if self hosted
+        static readonly string UserName = "LoupeUserName";
+        static readonly string Password = "LoupeUserPassword";
         static readonly string Tenant = "eSymmetrix";
 
         private static HttpClient client;
@@ -71,6 +71,7 @@ namespace ConsoleAPI
                 var query = JsonConvert.SerializeObject(queryModel);
                 var content = new StringContent(query, Encoding.UTF8, "application/json");
 
+                // for a single-tenant system, use "api/Sessions/SessionsFiltered"
                 using (var loginResponse = await client.PostAsync($"Customers/{Tenant}/api/Sessions/SessionsFiltered", content))
                 {
                     loginResponse.EnsureSuccessStatusCode();

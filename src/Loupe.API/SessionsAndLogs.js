@@ -7,7 +7,6 @@
         selectedSession;
 
     $(function () {
-        baseUrl = 'http://localhost:58080/';
 
         $('#baseUrl').val(baseUrl);
         $('#form').keypress(function (event) {
