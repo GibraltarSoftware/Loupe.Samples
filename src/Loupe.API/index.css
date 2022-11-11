@@ -55,3 +55,10 @@ ul.tabs li.selected {
 td {
     padding: 4px;
 }
+.selectable tr {
+    cursor: pointer;
+}
+#tenants {
+    max-height: 250px;
+    overflow-y: scroll;
+}

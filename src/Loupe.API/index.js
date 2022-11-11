@@ -77,6 +77,7 @@
             password = $('#password').val();
         var authToken = btoa(username + ':' + password);
         var settings = {
+            method: "GET",
             url: baseUrl + 'api/auth/token',
             headers: {
                 'Authorization': 'Basic ' + authToken
@@ -85,20 +86,27 @@
 
         $('#invalid').hide();
 
-        // authenticate the user to get the token
-        $.ajax(settings)
-            .done(function (response) {
-                accessToken = response.access_token;
-                $('#loggedIn').show();
-                loggedIn = true;
-                $('#login').val("Logout");
+        try {       
+            // authenticate the user to get the token
+            $.ajax(settings)
+                .done(function (response) {
+                    accessToken = response.access_token;
+                    $('#loggedIn').show();
+                    loggedIn = true;
+                    $('#login').val("Logout");
 
-                getTenants();
-            })
-            .fail(function () {
-                $('#loggedIn').hide();
-                $('#invalid').show();
-            });
+                    getTenants();
+                })
+                .fail(function () {
+                    $('#loggedIn').hide();
+                    $('#invalid').show();
+                });
+        }
+        catch(error) {
+            console.error(error);
+            $('#loggedIn').hide();
+            $('#invalid').show();
+        }
     }
 
     function logout() {

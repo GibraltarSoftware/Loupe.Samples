@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Loupe API Sessions and Logs</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="SessionsAndLogs.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+<body>
+    <form id="form">
+        <div class="pull-right">
+            <label>Loupe Base Url: <input id="baseUrl" required /></label>
+            <span>Eg: http://loupe.gibraltarsoftware.com/</span>
+        </div>
+
+        <h1>Step 1. Login to Loupe</h1>
+
+        <label>
+            Username: <input id="username" />
+        </label>
+        <label>
+            Password: <input id="password" type="password" />
+        </label>
+        <input type="submit" id="login" value="Login" />
+        <div id="invalid" class="hidden">The username or password were invalid. Please try again.</div>
+    </form>
+
+    <div id="loggedIn" class="hidden">
+        <h1>Step 2. Select Tenant</h1>
+        <div class="cols">
+            <div>
+                <h2>Tenants</h2>
+                <ul id="tenants"></ul>
+            </div>
+        </div>
+
+        <div id="sessionsContainer" class="tab-content">
+            <h2>Sessions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Application</td>
+                        <td>Started On</td>
+                        <td>Ended On</td>
+                        <td>User</td>
+                    </tr>
+                </thead>
+                <tbody id="sessions" class="selectable"></tbody>
+            </table>
+        </div>
+
+        <div id="logsContainer" class="tab-content">
+            <div class="pull-right">
+                <div>
+                    <label for="logSearch">Search</label>
+                    <input id="logSearch" type="search" placeholder="search" />
+                    <button id="searchSubmit">search</button>
+                </div>
+            </div>
+            <h2>Session Log</h2>
+            <table>
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="log"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
