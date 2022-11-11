@@ -9,15 +9,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ConsoleAPI.QueryModels;
+using ConsoleAPI.SessionModels;
 using Newtonsoft.Json;
 
 namespace ConsoleAPI
 {
     static class Program
     {
-        static readonly string BaseAddress = "https://loupe-test.onloupe.com/";
-        static readonly string UserName = "LoupeUserName";
-        static readonly string Password = "LoupePassword";
+        static readonly string BaseAddress = "http://localhost:58080/";
+        static readonly string UserName = "dave@gibraltarsoftware.com";
+        static readonly string Password = "TheRedLion";
+        static readonly string Tenant = "eSymmetrix";
 
         private static HttpClient client;
 
@@ -28,6 +30,7 @@ namespace ConsoleAPI
                 client.BaseAddress = new Uri(BaseAddress);
 
                 await Login();
+                //await SetTenant();
                 await GetSessions();
                 
                 Console.ReadLine();
@@ -68,24 +71,24 @@ namespace ConsoleAPI
                 var query = JsonConvert.SerializeObject(queryModel);
                 var content = new StringContent(query, Encoding.UTF8, "application/json");
 
-                using (var loginResponse = await client.PostAsync("Customers/eSymmetrix/api/Sessions/SessionsFiltered", content))
+                using (var loginResponse = await client.PostAsync($"Customers/{Tenant}/api/Sessions/SessionsFiltered", content))
                 {
                     loginResponse.EnsureSuccessStatusCode();
 
                     var responseString = await loginResponse.Content.ReadAsStringAsync();
-                    dynamic response = JsonConvert.DeserializeObject(responseString);
+                    var response = JsonConvert.DeserializeObject<GridResult<SessionSummaryModel>>(responseString);
 
-                    var data = response.data;
+                    var data = response.Data;
 
                     Console.WriteLine("Sessions");
                     Console.WriteLine("Application\tStart\tEnd\tUser");
 
-                    foreach (dynamic session in data)
+                    foreach (var session in data)
                     {
                         Console.WriteLine("{0}\t{1}\t{2}\t{3}",
-                            session.application.badge.title,
-                            session.startDateTime, session.endDateTime,
-                            session.userName);
+                            session.Application.Badge.Title,
+                            session.StartDateTime, session.EndDateTime,
+                            session.UserName);
                     }
 
                     Console.WriteLine("Done");
