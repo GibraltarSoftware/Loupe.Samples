@@ -16,7 +16,7 @@ namespace ConsoleAPI
 {
     static class Program
     {
-        static readonly string BaseAddress = "https://loupe-test.onloupe.com/";     // your Loupe URL if self hosted
+        static readonly string BaseAddress = "https://api-test.onloupe.com/";     // your Loupe URL if self hosted
         static readonly string UserName = "LoupeUserName";
         static readonly string Password = "LoupeUserPassword";
         static readonly string Tenant = "eSymmetrix";
@@ -32,7 +32,7 @@ namespace ConsoleAPI
                 await Login();
                 //await SetTenant();
                 await GetSessions();
-                
+
                 Console.ReadLine();
             }
 

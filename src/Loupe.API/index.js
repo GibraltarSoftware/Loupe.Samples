@@ -1,7 +1,7 @@
 ﻿(function ($) {
     var accessToken,
         loggedIn = false,
-        baseUrl = 'https://loupe-test.onloupe.com/',
+        baseUrl = 'https://api-test.onloupe.com/',
         currentTenant,
         currentApplication,
         currentVersion,
@@ -9,7 +9,7 @@
         userTenants,
         removeContainer;
 
-    
+
     $(function () {
         $('#baseUrl').val(baseUrl);
         $('#form').keypress(function () {
@@ -86,7 +86,7 @@
 
         $('#invalid').hide();
 
-        try {       
+        try {
             // authenticate the user to get the token
             $.ajax(settings)
                 .done(function (response) {
@@ -155,7 +155,7 @@
 
     // most customers have a single tenant
     function getTenants() {
-        var settings = callSettings('api/Tenant/ForUser');
+        var settings = callSettings('api/tenants/forUser');
 
         $('#tenants').empty();
         $.ajax(settings)
@@ -163,7 +163,7 @@
                 userTenants = response.tenants;
 
                 var tenants = $('#tenants');
-                
+
                 tenants.show();
                 $.each(response.tenants,
                     function (idx, tenant) {
@@ -208,7 +208,7 @@
         selectListItem('tenants', tenant);
         setBaseUrl(tenant);
 
-        var settings = callSettings('api/Tenant/Select/' + tenant, false, 'POST');
+        var settings = callSettings('api/tenants/' + tenant + '/Select/', false, 'POST');
 
         $.ajax(settings).done(function () {
             getApplications();
@@ -217,7 +217,7 @@
 
     // many calls in Loupe require the product and application, so fetch all these to allow user selection
     function getApplications() {
-        var settings = callSettings('Customers/' + currentTenant + '/api/Application/AllProductsAndApplications');
+        var settings = callSettings('Customers/' + currentTenant + '/api/applications/withProducts');
 
         $.ajax(settings).done(function (response) {
             var applications = $('#applications'),
@@ -275,10 +275,10 @@
     }
 
     function bindUsers() {
-        var settings = callSettings('Customers/' + currentTenant + '/api/User/SystemUsers', true);
+        var settings = callSettings('Customers/' + currentTenant + '/api/users/active', false);
 
-        var sessionsUsers = $('#sessionsUsers'),
-            appsUsers = $('#appsUsers');
+        var sessionsUsers = $('#sessionsUsers');
+        var appsUsers = $('#appsUsers');
 
         $.ajax(settings).done(function (response) {
             $.each(response,
@@ -397,10 +397,9 @@
     }
 
     function getOpenIssues() {
-        var settings = callSettings('Customers/' + currentTenant + '/api/Issues/OpenForApplication' +
-            '?applicationVersionId=' + currentVersion.id + 
-            '&take=0&skip=0' + 
-            '&page=1&pageSize=10');
+        var settings = callSettings('Customers/' + currentTenant + '/api/issues/forApplicationVersion/open/' +
+            currentVersion.id +
+            '/0/10');
 
         var openIssues = $('#openIssues');
         $.ajax(settings).done(function(response) {
@@ -416,9 +415,9 @@
 
     function getIssuesWildcard() {
         var versionString = $('#appVersionWildcard').val();
-        var settings = callSettings('Customers/' + currentTenant + '/api/Issues/ForVersion/' +
-            '?versionSpecifier=' + versionString +
-            '&page=1&pageSize=10');
+        var settings = callSettings('Customers/' + currentTenant + '/api/issues/forApplicationVersion/' +
+            versionString +
+            '/0/10');
 
         var versionIssues = $('#versionIssues');
         $.ajax(settings).done(function(response) {
@@ -522,7 +521,7 @@
         var actualRemove = $('#actualRemove');
         var removeAccountYes = $('#removeAccountYes');
         var removeAccountNo = $('#removeAccountNo');
-        
+
         removeContainer.show();
 
         removeAccountYes.click(function () {
